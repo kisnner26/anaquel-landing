@@ -3,71 +3,638 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Anaquel — Sabé cuánto ganás, no solo cuánto vendés</title>
-<meta name="description" content="Sistema de inventario, ventas, caja y cuentas por cobrar para comercios en Nicaragua. Dashboard en córdobas, POS e impresión de ticket 80mm.">
+<title>Anaquel — Inventario, ventas y caja para tu negocio</title>
+<meta name="description" content="Anaquel te muestra cada día cuánto ganaste, quién te debe y qué se te acaba. Inventario, punto de venta, caja, compras, sucursales y reportes en córdobas. Hecho en Managua.">
+<meta property="og:title" content="Anaquel — Sabé cuánto ganás, no solo cuánto vendés.">
+<meta property="og:description" content="Inventario, punto de venta, caja, cuentas por cobrar y reportes en un solo sistema, en córdobas.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0f14;--fg:#f2f4f7;--mut:#9aa4b2;--acc:#6ee7a0;--card:#121923;--line:#1f2a38}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
-.w{max-width:960px;margin:0 auto;padding:0 20px}
-header{padding:72px 0 40px}
-h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
-h1 em{color:var(--acc);font-style:normal}
-p.lead{font-size:20px;color:var(--mut);max-width:620px}
-.btn{display:inline-block;background:var(--acc);color:#052e16;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none;margin:20px 12px 0 0}
-.btn.o{background:transparent;color:var(--fg);border:1px solid var(--line)}
-section{padding:40px 0;border-top:1px solid var(--line)}
-h2{font-size:28px;margin:0 0 20px}
-.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-.c h3{margin:0 0 6px;font-size:18px}.c p{margin:0;color:var(--mut)}
-.price{font-size:36px;font-weight:800}.price small{font-size:15px;color:var(--mut);font-weight:400}
-ul{padding-left:18px;color:var(--mut)}li{margin:6px 0}
-footer{padding:40px 0;color:var(--mut);font-size:14px}
+:root{
+  --bg:#0b0b0c;--bg2:#121214;--ink:#f4f1ea;--mute:#8d8a84;--accent:#f2b632;
+  --line:rgba(244,241,234,.14);--ok:#5ed39a;--bad:#ff6a55;--warn:#f2b632;
+  --ease:cubic-bezier(.2,.8,.2,1)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.w{max-width:1160px;margin:0 auto;padding:0 24px}
+.micro{font:500 10.5px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.display{font:400 clamp(52px,10.5vw,148px)/.86 'Anton','Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:-.01em}
+.h2{font:400 clamp(40px,6.4vw,84px)/.9 'Anton',Impact,sans-serif;text-transform:uppercase;letter-spacing:-.005em}
+.display em,.h2 em{font-style:normal;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#0b0b0c;border:0;border-radius:0;padding:15px 24px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .3s var(--ease),background .3s}
+.btn:hover{transform:translateY(-2px);background:#ffc94f}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:112px 0;border-top:1px solid var(--line);position:relative}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:16px}
+.lead{font-size:19px;color:#c9c5bc;max-width:560px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(11,11,12,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .w{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font:400 24px/1 'Anton',sans-serif;letter-spacing:.02em;text-transform:uppercase;text-decoration:none}
+.logo i{color:var(--accent);font-style:normal}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{text-decoration:none;font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .2s}
+nav ul a:hover{color:var(--ink)}
+nav .btn{padding:11px 16px}
+
+/* HERO */
+.hero{padding:150px 0 90px;border-top:0;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:24px;border:1px solid var(--line);pointer-events:none}
+.hero .corner{position:absolute;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+.hero .tl{top:40px;left:44px}.hero .tr{top:40px;right:44px}.hero .bl{bottom:40px;left:44px}.hero .br{bottom:40px;right:44px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero p.lead{margin:28px 0 32px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.proof{display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
+.proof div b{display:block;font:400 34px/1 'Anton',sans-serif;color:var(--ink)}
+.proof div span{font:500 10px/1.4 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+/* MOCKS */
+.mock{background:var(--bg2);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.8)}
+.mock-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line);background:#0e0e10}
+.mock-bar i{width:8px;height:8px;border-radius:50%;background:#2a2a2d}
+.mock-bar span{margin-left:10px}
+.mock-body{padding:18px}
+.live{display:inline-flex;align-items:center;gap:6px;color:var(--ok)}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{border:1px solid var(--line);padding:10px 11px;border-radius:4px;background:#0f0f11}
+.kpi small{display:block;font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.kpi b{font:700 18px/1 'Space Grotesk',sans-serif;letter-spacing:-.01em}
+.kpi em{display:inline-block;font:500 9px/1 'JetBrains Mono',monospace;font-style:normal;padding:3px 5px;border-radius:2px;margin-left:5px;vertical-align:2px}
+.g{color:var(--ok)}.r{color:var(--bad)}.a{color:var(--warn)}
+.bg-r{background:rgba(255,106,85,.16);color:var(--bad)}.bg-a{background:rgba(242,182,50,.16);color:var(--warn)}.bg-g{background:rgba(94,211,154,.14);color:var(--ok)}
+.bars{display:flex;align-items:flex-end;gap:5px;height:84px;margin:16px 0 4px}
+.bars i{flex:1;background:linear-gradient(var(--accent),rgba(242,182,50,.25));border-radius:2px 2px 0 0;transform-origin:bottom;animation:grow 1.2s var(--ease) both}
+@keyframes grow{from{transform:scaleY(0)}}
+table.t{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+table.t th{font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+table.t td{padding:9px 6px;border-bottom:1px solid rgba(244,241,234,.07)}
+table.t td:last-child,table.t th:last-child{text-align:right}
+.note{font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--mute);margin-top:12px;text-transform:uppercase}
+
+/* MARQUEE */
+.marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;white-space:nowrap}
+.marq div{display:inline-block;animation:slide 40s linear infinite}
+.marq span{font:400 28px/1 'Anton',sans-serif;text-transform:uppercase;color:var(--mute);margin-right:40px}
+.marq span b{color:var(--accent);font-weight:400;margin-left:40px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* PAIN */
+.pain{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.pain div{background:var(--bg);padding:28px 22px}
+.pain b{font:400 44px/1 'Anton',sans-serif;color:var(--bad)}
+.pain h3{font:700 16px/1.3 'Space Grotesk',sans-serif;margin:14px 0 8px}
+.pain p{font-size:14px;color:var(--mute)}
+
+/* FEATURE ROWS */
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:56px 0;border-top:1px solid var(--line)}
+.feat:first-of-type{border-top:0}
+.feat.rev .txt{order:2}
+.feat .num{font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;display:block}
+.feat h3{font:400 clamp(34px,4.6vw,58px)/.92 'Anton',sans-serif;text-transform:uppercase;margin-bottom:18px}
+.feat h3 em{font-style:normal;color:var(--accent)}
+.feat p{color:#c9c5bc;margin-bottom:18px;max-width:480px}
+.feat ul{list-style:none;display:grid;gap:9px}
+.feat li{font-size:14.5px;color:#d8d4cb;padding-left:22px;position:relative}
+.feat li::before{content:"→";position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.pos-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.ticket{background:#f4f1ea;color:#111;padding:14px;border-radius:3px;font:400 11.5px/1.7 'JetBrains Mono',monospace}
+.ticket hr{border:0;border-top:1px dashed #999;margin:7px 0}
+.ticket .row{display:flex;justify-content:space-between}
+.ticket .tot{font-weight:700;font-size:13px}
+.prod{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(244,241,234,.07);font-size:13px}
+.prod span:last-child{font-family:'JetBrains Mono',monospace}
+.pay{display:flex;gap:6px;margin-top:12px}
+.pay span{flex:1;text-align:center;padding:9px 4px;border:1px solid var(--line);border-radius:3px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.pay span.on{background:var(--accent);color:#0b0b0c;border-color:var(--accent)}
+.flow{display:grid;gap:10px}
+.flow .step{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:12px 14px;border-radius:4px;background:#0f0f11;font-size:13.5px}
+.flow .step b{font:500 10px/1 'JetBrains Mono',monospace;color:var(--accent);letter-spacing:.1em}
+.flow .arrow{text-align:center;color:var(--mute);font-family:'JetBrains Mono',monospace;line-height:1}
+.diff{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.diff div{border:1px solid var(--line);padding:12px;border-radius:4px;background:#0f0f11;text-align:center}
+.diff small{display:block;font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.diff b{font:700 20px/1 'Space Grotesk'}
+.aging{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 4px}
+.aging div{border:1px solid var(--line);padding:10px 8px;border-radius:3px;text-align:center;background:#0f0f11}
+.aging small{display:block;font:500 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.aging b{font-size:14px}
+
+/* GRID OF MORE */
+.more{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.more div{background:var(--bg);padding:30px 24px;transition:background .3s}
+.more div:hover{background:var(--bg2)}
+.more .micro{color:var(--accent);margin-bottom:14px;display:block}
+.more h4{font:700 18px/1.25 'Space Grotesk',sans-serif;margin-bottom:8px}
+.more p{font-size:14px;color:var(--mute)}
+
+/* COMPARE */
+.cmp{border:1px solid var(--line);margin-top:40px;overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse;min-width:640px}
+.cmp th,.cmp td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:14.5px}
+.cmp th{font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.cmp th.us{color:var(--accent)}
+.cmp td.us{background:rgba(242,182,50,.06);color:var(--ink)}
+.cmp td:not(.us):not(:first-child){color:var(--mute)}
+.cmp tr:last-child td{border-bottom:0}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.steps div{background:var(--bg);padding:30px 22px}
+.steps b{font:400 54px/1 'Anton',sans-serif;color:var(--accent);display:block;margin-bottom:12px}
+.steps h4{font:700 16px/1.3 'Space Grotesk';margin-bottom:8px}
+.steps p{font-size:14px;color:var(--mute)}
+
+/* PRICING */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.plan{border:1px solid var(--line);padding:32px 26px;background:var(--bg2);display:flex;flex-direction:column;position:relative}
+.plan.hot{border-color:var(--accent)}
+.plan.hot::before{content:"MÁS ELEGIDO";position:absolute;top:-10px;left:22px;background:var(--accent);color:#0b0b0c;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;padding:5px 8px}
+.plan h3{font:400 30px/1 'Anton',sans-serif;text-transform:uppercase;margin-bottom:6px}
+.plan .p{font:400 64px/1 'Anton',sans-serif;margin:16px 0 4px}
+.plan .p small{font:500 11px/1 'JetBrains Mono',monospace;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+.plan ul{list-style:none;margin:20px 0 28px;display:grid;gap:10px;flex:1}
+.plan li{font-size:14.5px;padding-left:22px;position:relative;color:#d8d4cb}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--accent)}
+.plan .btn{justify-content:center}
+.setup{margin-top:16px;border:1px dashed var(--line);padding:20px 24px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.setup b{font:400 28px/1 'Anton';text-transform:uppercase}
+.setup span{color:var(--mute);font-size:14.5px;max-width:620px}
+
+/* FAQ */
+.faq{margin-top:40px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{list-style:none;cursor:pointer;font:700 18px/1.4 'Space Grotesk';display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:400 24px/1 'JetBrains Mono';color:var(--accent);transition:transform .3s var(--ease)}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:#c9c5bc;margin-top:14px;max-width:760px;font-size:15.5px}
+
+/* CTA */
+.final{text-align:left;padding:140px 0}
+.final .display{margin-bottom:28px}
+.final .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+footer{border-top:1px solid var(--line);padding:32px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* WA float */
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;background:var(--accent);color:#0b0b0c;padding:14px 18px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;box-shadow:0 14px 40px -10px rgba(242,182,50,.55);transition:transform .3s var(--ease)}
+.wa:hover{transform:translateY(-3px)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.bars i,.marq div,.live::before{animation:none}html{scroll-behavior:auto}}
+
+@media (max-width:900px){
+  section{padding:80px 0}
+  nav ul{display:none}
+  .hero{padding:110px 0 60px}.hero::before{inset:12px}.hero .corner{display:none}
+  .hero-grid,.feat{grid-template-columns:1fr;gap:36px}
+  .feat.rev .txt{order:0}
+  .pain,.steps{grid-template-columns:1fr 1fr}
+  .more,.plans{grid-template-columns:1fr}
+  .pos-grid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){.pain,.steps{grid-template-columns:1fr}.w{padding:0 18px}.wa{right:12px;bottom:12px}}
 </style>
 </head>
 <body>
-<div class="w">
-<header>
-  <h1>Vender no es ganar. <em>Sabé cuánto ganás.</em></h1>
-  <p class="lead">Inventario, punto de venta, caja y cuentas por cobrar en un solo sistema, en córdobas y sin contador. Te lo dejo funcionando en tu negocio en una semana.</p>
-  <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel">Pedir demo por WhatsApp</a>
-  <a class="btn o" href="#precios">Ver precios</a>
+
+<nav>
+  <div class="w">
+    <a class="logo" href="#top">Anaquel<i>.</i></a>
+    <ul>
+      <li><a href="#funciones">Funciones</a></li>
+      <li><a href="#comparar">Vs. cuaderno</a></li>
+      <li><a href="#proceso">Cómo empezamos</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#faq">Preguntas</a></li>
+    </ul>
+    <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel" target="_blank" rel="noopener">Pedir demo ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <span class="corner tl">Anaquel / 001</span><span class="corner tr">Managua, Nicaragua</span>
+  <span class="corner bl">Córdobas · C$</span><span class="corner br">Inventario · Ventas · Caja</span>
+  <div class="w hero-grid">
+    <div>
+      <span class="micro">Sistema para comercios y distribuidoras</span>
+      <h1 class="display" style="margin-top:18px">Vender<br>no es <em>ganar.</em></h1>
+      <p class="lead">Anaquel te dice cada mañana cuánto ganaste, quién te debe y qué se te está acabando. Inventario, punto de venta, caja y reportes en una sola pantalla, en córdobas y sin Excel.</p>
+      <div class="cta">
+        <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel" target="_blank" rel="noopener">Ver demo de 7 minutos ↗</a>
+        <a class="btn ghost" href="#funciones">Ver todo lo que hace →</a>
+      </div>
+      <div class="proof">
+        <div><b>7</b><span>indicadores<br>en una pantalla</span></div>
+        <div><b>1 venta</b><span>mueve stock,<br>caja y cobros</span></div>
+        <div><b>7 días</b><span>para vender<br>con el sistema</span></div>
+      </div>
+    </div>
+
+    <div class="mock rv">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="micro">anaquel / dashboard</span><span class="micro live" style="margin-left:auto">Caja abierta · C$2,350</span></div>
+      <div class="mock-body">
+        <div class="kpis">
+          <div class="kpi"><small>Ventas</small><b>C$15,057</b></div>
+          <div class="kpi"><small>Utilidad</small><b class="g">C$7,924</b></div>
+          <div class="kpi"><small>Margen</small><b class="g">52.6%</b></div>
+          <div class="kpi"><small>Por cobrar</small><b>C$2,551</b><em class="bg-r">vencido</em></div>
+          <div class="kpi"><small>Por pagar</small><b>C$151</b></div>
+          <div class="kpi"><small>Bajo mínimo</small><b class="a">44</b><em class="bg-a">reponer</em></div>
+        </div>
+        <div class="bars">
+          <i style="height:38%;animation-delay:.05s"></i><i style="height:52%;animation-delay:.1s"></i><i style="height:44%;animation-delay:.15s"></i><i style="height:67%;animation-delay:.2s"></i><i style="height:58%;animation-delay:.25s"></i><i style="height:81%;animation-delay:.3s"></i><i style="height:72%;animation-delay:.35s"></i><i style="height:49%;animation-delay:.4s"></i><i style="height:63%;animation-delay:.45s"></i><i style="height:90%;animation-delay:.5s"></i><i style="height:77%;animation-delay:.55s"></i><i style="height:100%;animation-delay:.6s"></i>
+        </div>
+        <span class="micro">Ventas por día · últimos 30 días</span>
+        <p class="note">Datos de la versión de demostración. Tus números reales aparecen apenas empiezas a vender.</p>
+      </div>
+    </div>
+  </div>
 </header>
 
+<div class="marq" aria-hidden="true"><div>
+  <span>Inventario<b>/</b></span><span>Punto de venta<b>/</b></span><span>Caja y arqueo<b>/</b></span><span>Cuentas por cobrar<b>/</b></span><span>Compras<b>/</b></span><span>Sucursales<b>/</b></span><span>Utilidad real<b>/</b></span><span>Reportes<b>/</b></span>
+  <span>Inventario<b>/</b></span><span>Punto de venta<b>/</b></span><span>Caja y arqueo<b>/</b></span><span>Cuentas por cobrar<b>/</b></span><span>Compras<b>/</b></span><span>Sucursales<b>/</b></span><span>Utilidad real<b>/</b></span><span>Reportes<b>/</b></span>
+</div></div>
+
+<!-- PROBLEMA -->
 <section>
-  <h2>Lo que vas a saber cada día</h2>
-  <div class="g">
-    <div class="c"><h3>Cuánto ganaste</h3><p>Ventas, utilidad y margen juntos en el dashboard, no solo el total vendido.</p></div>
-    <div class="c"><h3>Quién te debe</h3><p>Cuentas por cobrar por cliente y por antigüedad: corriente, +30 y +60 días.</p></div>
-    <div class="c"><h3>Qué se te acaba</h3><p>Alerta de productos bajo mínimo y orden de compra con un clic.</p></div>
-    <div class="c"><h3>Dónde se va el efectivo</h3><p>Caja en vivo y arqueo al cerrar turno: ves la diferencia al instante.</p></div>
-    <div class="c"><h3>Venta en un segundo</h3><p>Busca o escanea, cobra e imprime ticket 80mm. Descuenta inventario solo.</p></div>
-    <div class="c"><h3>Tu costo real</h3><p>El costo promedio se actualiza al recibir compras, así protegés tu margen.</p></div>
+  <div class="w">
+    <div class="sec-head"><span class="micro">01 / El problema</span><span class="micro">¿Te suena?</span></div>
+    <h2 class="h2 rv">Vendés bien.<br>¿Pero <em>ganás</em>?</h2>
+    <p class="lead rv" style="margin-top:24px">La mayoría de los negocios saben cuánto vendieron, pero no cuánto les quedó. Y la plata se pierde en cuatro lugares que casi nadie está mirando.</p>
+    <div class="pain rv">
+      <div><b>01</b><h3>Plata en la calle</h3><p>Fiados que se olvidan. Nadie sabe quién debe, cuánto ni desde cuándo.</p></div>
+      <div><b>02</b><h3>Ventas que se van</h3><p>El producto que más rota se acaba y te enterás cuando el cliente ya se fue.</p></div>
+      <div><b>03</b><h3>Efectivo que no cuadra</h3><p>Al cerrar el turno falta plata y no hay forma de saber dónde, ni de quién.</p></div>
+      <div><b>04</b><h3>Costo que sube</h3><p>Tu proveedor subió el precio y seguís vendiendo al mismo valor, perdiendo margen.</p></div>
+    </div>
   </div>
 </section>
 
+<!-- FUNCIONES -->
+<section id="funciones">
+  <div class="w">
+    <div class="sec-head"><span class="micro">02 / Lo que hace Anaquel</span><span class="micro">Todo sale de vender</span></div>
+    <h2 class="h2 rv">Una venta.<br><em>Todo</em> se actualiza.</h2>
+    <p class="lead rv" style="margin-top:24px">No registrás las cosas dos veces. Cuando tu cajero cobra, el inventario baja, la caja sube, el cobro queda anotado y tus reportes ya están al día.</p>
+
+    <!-- 1 Dashboard -->
+    <div class="feat">
+      <div class="txt rv">
+        <span class="num">01 / Dashboard</span>
+        <h3>Cuánto <em>ganaste</em>,<br>no solo cuánto vendiste.</h3>
+        <p>Ventas, utilidad y margen lado a lado. En segundos ves si tu negocio está dejando plata o solo moviendo mercadería.</p>
+        <ul>
+          <li>Siete indicadores en la primera pantalla: ventas, utilidad, margen, por cobrar, por pagar, efectivo en caja y bajo mínimo.</li>
+          <li>Ventas por día y por sucursal, con filtro por rango de fechas.</li>
+          <li>Top de productos por <b>utilidad</b>, no por ventas: cuáles sí te dejan plata.</li>
+          <li>Cada número es un atajo: un clic y llegás a la lista para actuar.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">top productos por utilidad</span></div>
+        <div class="mock-body">
+          <table class="t">
+            <tr><th>Producto</th><th>Unidades</th><th>Margen</th><th>Utilidad</th></tr>
+            <tr><td>Cemento 42.5 kg</td><td>128</td><td class="g">31%</td><td class="g">C$1,920</td></tr>
+            <tr><td>Pintura látex 1 gl</td><td>64</td><td class="g">47%</td><td class="g">C$1,610</td></tr>
+            <tr><td>Tubo PVC 1/2"</td><td>210</td><td class="g">58%</td><td class="g">C$1,344</td></tr>
+            <tr><td>Disco de corte 7"</td><td>96</td><td class="g">52%</td><td class="g">C$980</td></tr>
+          </table>
+          <p class="note">Ejemplo ilustrativo del orden por utilidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 POS -->
+    <div class="feat rev">
+      <div class="txt rv">
+        <span class="num">02 / Punto de venta</span>
+        <h3>Cobrar toma<br><em>un segundo.</em></h3>
+        <p>Tu cajero busca o escanea el producto, elige cómo paga y cobra. Sale el ticket y el sistema hace el resto.</p>
+        <ul>
+          <li>Búsqueda por nombre o código de barras, o escáner directo.</li>
+          <li>Efectivo, tarjeta, transferencia o a crédito, con límite por cliente.</li>
+          <li>Ticket de 80 mm y factura en PDF con folio consecutivo.</li>
+          <li>Funciona en el teléfono y en la computadora.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">vender</span></div>
+        <div class="mock-body pos-grid">
+          <div>
+            <div class="prod"><span>Cemento 42.5 kg × 2</span><span>C$ 640</span></div>
+            <div class="prod"><span>Tubo PVC 1/2" × 5</span><span>C$ 225</span></div>
+            <div class="prod"><span>Pegamento PVC × 1</span><span>C$ 95</span></div>
+            <div class="pay"><span>Efectivo</span><span class="on">Tarjeta</span><span>Crédito</span></div>
+            <a class="btn" style="margin-top:12px;width:100%;justify-content:center;pointer-events:none">Cobrar C$ 960 ↗</a>
+          </div>
+          <div class="ticket">
+            <div class="row"><b>ANAQUEL</b><span>#00058</span></div>
+            <hr>
+            <div class="row"><span>Subtotal</span><span>835.65</span></div>
+            <div class="row"><span>IVA 15%</span><span>124.35</span></div>
+            <hr>
+            <div class="row tot"><span>TOTAL</span><span>C$ 960.00</span></div>
+            <hr>
+            <div style="text-align:center">Gracias por su compra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 CxC -->
+    <div class="feat">
+      <div class="txt rv">
+        <span class="num">03 / Cuentas por cobrar</span>
+        <h3>Quién te debe,<br>cuánto y <em>desde cuándo.</em></h3>
+        <p>Dejá de perseguir deudas de memoria. Anaquel te muestra a quién cobrarle hoy y quién ya se pasó.</p>
+        <ul>
+          <li>Antigüedad de saldos: corriente, 30, 60 y más de 60 días.</li>
+          <li>Estado de cuenta por cliente, con todos sus movimientos.</li>
+          <li>Abonos y pagos parciales registrados contra cada factura.</li>
+          <li>Límite de crédito por cliente para no fiar de más.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">cuentas por cobrar</span></div>
+        <div class="mock-body">
+          <div class="aging">
+            <div><small>Corriente</small><b class="g">C$1,200</b></div>
+            <div><small>1–30 días</small><b class="a">C$640</b></div>
+            <div><small>31–60</small><b class="a">C$420</b></div>
+            <div><small>+60 días</small><b class="r">C$291</b></div>
+          </div>
+          <table class="t">
+            <tr><th>Cliente</th><th>Antigüedad</th><th>Saldo</th></tr>
+            <tr><td>Constructora Los Pinos</td><td class="r">74 días</td><td>C$291</td></tr>
+            <tr><td>Taller Hernández</td><td class="a">42 días</td><td>C$420</td></tr>
+            <tr><td>Carlos M.</td><td class="a">18 días</td><td>C$640</td></tr>
+          </table>
+          <p class="note">Ejemplo ilustrativo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Inventario y compras -->
+    <div class="feat rev">
+      <div class="txt rv">
+        <span class="num">04 / Inventario y compras</span>
+        <h3>Que no se te acabe<br>lo que <em>más rota.</em></h3>
+        <p>Anaquel te avisa antes de quedarte sin producto y te protege el margen cuando tu proveedor sube precios.</p>
+        <ul>
+          <li>Alerta de productos bajo el mínimo, por sucursal.</li>
+          <li>Órdenes de compra con recepción total o parcial.</li>
+          <li>Costo promedio actualizado en cada compra, con el antes y el después.</li>
+          <li>Cuentas por pagar y estado de cuenta por proveedor.</li>
+          <li>Kardex por producto, valoración del inventario y rotación.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">recepción de compra</span></div>
+        <div class="mock-body">
+          <table class="t">
+            <tr><th>Producto</th><th>Costo antes</th><th>Costo nuevo</th></tr>
+            <tr><td>Cemento 42.5 kg</td><td>C$ 288</td><td class="r">C$ 301 ▲</td></tr>
+            <tr><td>Tubo PVC 1/2"</td><td>C$ 17.5</td><td>C$ 17.5</td></tr>
+          </table>
+          <div class="diff">
+            <div><small>Existencia</small><b>12</b></div>
+            <div><small>Mínimo</small><b class="a">40</b></div>
+            <div><small>Sugerido</small><b class="g">+60</b></div>
+          </div>
+          <p class="note">Si el costo sube, lo ves y ajustás tu precio a tiempo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Caja -->
+    <div class="feat">
+      <div class="txt rv">
+        <span class="num">05 / Caja y arqueo</span>
+        <h3>Que el efectivo<br>no <em>se pierda.</em></h3>
+        <p>Cada turno abre y cierra con cuentas claras. Si falta o sobra plata, lo sabés al instante y no a fin de mes.</p>
+        <ul>
+          <li>Apertura y cierre de caja por cajero y por turno.</li>
+          <li>Efectivo esperado en vivo, siempre visible arriba.</li>
+          <li>Arqueo: contás lo que hay y el sistema muestra la diferencia.</li>
+          <li>Entradas y salidas de efectivo con su motivo, y reporte por sesión.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">cerrar caja</span></div>
+        <div class="mock-body">
+          <div class="diff">
+            <div><small>Esperado</small><b>C$ 2,350</b></div>
+            <div><small>Contado</small><b>C$ 2,310</b></div>
+            <div><small>Diferencia</small><b class="r">– C$ 40</b></div>
+          </div>
+          <table class="t" style="margin-top:14px">
+            <tr><th>Movimiento</th><th>Hora</th><th>Monto</th></tr>
+            <tr><td>Apertura</td><td>07:58</td><td>C$ 500</td></tr>
+            <tr><td>Ventas en efectivo</td><td>—</td><td class="g">+ C$ 1,980</td></tr>
+            <tr><td>Retiro a proveedor</td><td>11:20</td><td class="r">– C$ 130</td></tr>
+          </table>
+          <p class="note">Ejemplo ilustrativo de un cierre con diferencia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Sucursales -->
+    <div class="feat rev">
+      <div class="txt rv">
+        <span class="num">06 / Sucursales y traspasos</span>
+        <h3>Un dueño.<br><em>Varias</em> sucursales.</h3>
+        <p>Cada sucursal tiene su stock, su caja y sus folios. Vos ves todo junto o por separado, desde donde estés.</p>
+        <ul>
+          <li>Dashboard y reportes consolidados o filtrados por sucursal.</li>
+          <li>Traspasos entre sucursales: solicitar, despachar y recibir.</li>
+          <li>Ajustes de inventario, entradas y salidas con trazabilidad.</li>
+          <li>Ventas por sucursal, por producto y por cliente.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">traspaso entre sucursales</span></div>
+        <div class="mock-body">
+          <div class="flow">
+            <div class="step"><b>01</b>Sucursal Altamira solicita 24 unidades de Pintura látex</div>
+            <div class="arrow">↓</div>
+            <div class="step"><b>02</b>Casa Matriz despacha. El stock sale de Matriz</div>
+            <div class="arrow">↓</div>
+            <div class="step"><b>03</b>Altamira recibe y confirma. El stock entra a Altamira</div>
+          </div>
+          <p class="note">Nada se pierde en el camino: cada paso queda registrado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 Facturas -->
+    <div class="feat">
+      <div class="txt rv">
+        <span class="num">07 / Control y documentos</span>
+        <h3>Si te equivocás,<br>queda <em>todo claro.</em></h3>
+        <p>Las facturas no se borran, para que tu contabilidad siempre cuadre. Se anulan con motivo o se corrigen con nota de crédito.</p>
+        <ul>
+          <li>Cotizaciones que se convierten en factura con un clic.</li>
+          <li>Anulación con motivo y nota de crédito.</li>
+          <li>Factura en PDF lista para enviar o imprimir.</li>
+          <li>Gastos operativos registrados para ver la ganancia real del negocio.</li>
+          <li>Tipo de cambio configurable para trabajar con más de una moneda.</li>
+        </ul>
+      </div>
+      <div class="mock rv">
+        <div class="mock-bar"><i></i><i></i><i></i><span class="micro">documentos</span></div>
+        <div class="mock-body">
+          <table class="t">
+            <tr><th>Folio</th><th>Tipo</th><th>Estado</th><th>Total</th></tr>
+            <tr><td>#00061</td><td>Cotización</td><td><span class="bg-a" style="padding:3px 6px;font:500 9px 'JetBrains Mono'">enviada</span></td><td>C$ 4,820</td></tr>
+            <tr><td>#00058</td><td>Factura</td><td><span class="bg-g" style="padding:3px 6px;font:500 9px 'JetBrains Mono'">pagada</span></td><td>C$ 960</td></tr>
+            <tr><td>#00055</td><td>Factura</td><td><span class="bg-r" style="padding:3px 6px;font:500 9px 'JetBrains Mono'">anulada</span></td><td>C$ 310</td></tr>
+            <tr><td>#00056</td><td>Nota de crédito</td><td><span class="bg-g" style="padding:3px 6px;font:500 9px 'JetBrains Mono'">aplicada</span></td><td>– C$ 310</td></tr>
+          </table>
+          <p class="note">Todo queda auditado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÁS -->
+    <div class="more rv">
+      <div><span class="micro">Seguridad</span><h4>Tus datos son solo tuyos</h4><p>Cada negocio tiene su propia base de datos, separada de las demás. Nadie más ve tu información.</p></div>
+      <div><span class="micro">Accesos</span><h4>Cada quien ve lo suyo</h4><p>El dueño ve todo; el cajero, el bodeguero y el contador entran con su propio usuario y sus permisos.</p></div>
+      <div><span class="micro">Códigos</span><h4>Códigos de barras</h4><p>Genera e imprime códigos para tus productos y vendé escaneando.</p></div>
+      <div><span class="micro">Catálogo</span><h4>Orden total</h4><p>Productos con categorías, marcas y unidades de medida, listos para buscar en segundos.</p></div>
+      <div><span class="micro">Proveedores</span><h4>Qué le debés a quién</h4><p>Cuentas por pagar y estado de cuenta de cada proveedor, con pagos registrados.</p></div>
+      <div><span class="micro">Reportes</span><h4>Dónde está tu dinero</h4><p>Qué producto, qué cliente y qué sucursal te dejan plata. Sin esperar al contador.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARAR -->
+<section id="comparar">
+  <div class="w">
+    <div class="sec-head"><span class="micro">03 / Comparación</span><span class="micro">Cuaderno · Excel · Anaquel</span></div>
+    <h2 class="h2 rv">Tu cuaderno<br>no te <em>avisa.</em></h2>
+    <div class="cmp rv">
+      <table>
+        <tr><th></th><th>Cuaderno</th><th>Excel</th><th class="us">Anaquel</th></tr>
+        <tr><td>Sabés cuánto ganaste hoy</td><td>No</td><td>Si lo armás a mano</td><td class="us">Sí, en el dashboard</td></tr>
+        <tr><td>Te avisa cuando algo se acaba</td><td>No</td><td>No</td><td class="us">Sí, alerta por mínimo</td></tr>
+        <tr><td>Quién te debe y desde cuándo</td><td>De memoria</td><td>Manual</td><td class="us">Automático, por antigüedad</td></tr>
+        <tr><td>Cuadre de caja por turno</td><td>No</td><td>Manual</td><td class="us">Arqueo con diferencia</td></tr>
+        <tr><td>Varias sucursales</td><td>Un cuaderno por local</td><td>Archivos separados</td><td class="us">Todo consolidado</td></tr>
+        <tr><td>Controla errores y anulaciones</td><td>Se tacha</td><td>Se sobrescribe</td><td class="us">Anulación y nota de crédito</td></tr>
+        <tr><td>Registrás cada dato dos veces</td><td>Sí</td><td>Sí</td><td class="us">No: una venta lo actualiza todo</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="w">
+    <div class="sec-head"><span class="micro">04 / Cómo empezamos</span><span class="micro">Sin complicaciones</span></div>
+    <h2 class="h2 rv">En una semana<br>ya estás <em>vendiendo.</em></h2>
+    <div class="steps rv">
+      <div><b>01</b><h4>Demo de 7 minutos</h4><p>Te lo muestro con números de ejemplo, por videollamada o en tu local.</p></div>
+      <div><b>02</b><h4>Cargamos tu negocio</h4><p>Dejamos listos tus productos, clientes y proveedores contigo.</p></div>
+      <div><b>03</b><h4>Capacitamos a tu equipo</h4><p>Tu cajero y tu bodeguero aprenden con sus propias ventas.</p></div>
+      <div><b>04</b><h4>Acompañamiento</h4><p>El primer mes estoy pendiente para resolver cualquier duda por WhatsApp.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
 <section id="precios">
-  <h2>Precios claros</h2>
-  <div class="g">
-    <div class="c"><h3>Básico</h3><div class="price">US$19 <small>/mes</small></div>
-    <ul><li>1 sucursal, 2 usuarios</li><li>Inventario + POS + caja</li><li>Soporte por WhatsApp</li></ul></div>
-    <div class="c"><h3>Negocio</h3><div class="price">US$35 <small>/mes</small></div>
-    <ul><li>Hasta 3 sucursales, 6 usuarios</li><li>Cuentas por cobrar y por pagar</li><li>Compras y reportes</li></ul></div>
-    <div class="c"><h3>Instalación</h3><div class="price">US$120 <small>único</small></div>
-    <ul><li>Carga de tus productos y clientes</li><li>Capacitación al personal</li><li>Primer mes de acompañamiento</li></ul></div>
+  <div class="w">
+    <div class="sec-head"><span class="micro">05 / Precios</span><span class="micro">En dólares · sin letra chica</span></div>
+    <h2 class="h2 rv">Pagás por<br>lo que <em>necesitás.</em></h2>
+    <div class="plans rv">
+      <div class="plan">
+        <h3>Básico</h3><span class="micro">Para un solo local</span>
+        <div class="p">$19 <small>/ mes</small></div>
+        <ul><li>1 sucursal y 2 usuarios</li><li>Inventario y punto de venta</li><li>Caja y arqueo</li><li>Cuentas por cobrar</li><li>Soporte por WhatsApp</li></ul>
+        <a class="btn ghost" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20B%C3%A1sico%20de%20Anaquel" target="_blank" rel="noopener">Elegir Básico ↗</a>
+      </div>
+      <div class="plan hot">
+        <h3>Negocio</h3><span class="micro">Para crecer con orden</span>
+        <div class="p">$35 <small>/ mes</small></div>
+        <ul><li>Hasta 3 sucursales y 6 usuarios</li><li>Todo lo del plan Básico</li><li>Compras y cuentas por pagar</li><li>Traspasos entre sucursales</li><li>Cotizaciones y notas de crédito</li><li>Reportes completos</li></ul>
+        <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Negocio%20de%20Anaquel" target="_blank" rel="noopener">Elegir Negocio ↗</a>
+      </div>
+      <div class="plan">
+        <h3>A tu medida</h3><span class="micro">Más sucursales o necesidades</span>
+        <div class="p" style="font-size:44px;padding:10px 0">Hablemos</div>
+        <ul><li>Más de 3 sucursales</li><li>Más usuarios</li><li>Necesidades especiales de tu rubro</li><li>Plan según tu operación</li></ul>
+        <a class="btn ghost" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20un%20plan%20a%20medida%20de%20Anaquel" target="_blank" rel="noopener">Consultar ↗</a>
+      </div>
+    </div>
+    <div class="setup rv">
+      <div><b>Instalación · $120 único</b></div>
+      <span>Cargamos tus productos, clientes y proveedores, configuramos tu sucursal y capacitamos a tu equipo. Incluye el primer mes de acompañamiento.</span>
+    </div>
   </div>
 </section>
 
-<section>
-  <h2>Cómo empezamos</h2>
-  <ul>
-    <li><b>Día 1:</b> demo de 7 minutos con tus propios números.</li>
-    <li><b>Días 2-5:</b> cargamos tus productos, clientes y proveedores.</li>
-    <li><b>Día 7:</b> tu equipo ya vende con el sistema.</li>
-  </ul>
+<!-- FAQ -->
+<section id="faq">
+  <div class="w">
+    <div class="sec-head"><span class="micro">06 / Preguntas</span><span class="micro">Respuestas directas</span></div>
+    <h2 class="h2 rv">Lo que<br>nos <em>preguntan.</em></h2>
+    <div class="faq rv">
+      <details><summary>¿Funciona con varias sucursales?</summary><p>Sí. Cada sucursal maneja su propio stock, su caja y sus folios. Vos ves todo consolidado o filtrado por sucursal, y podés mover mercadería entre locales con traspasos.</p></details>
+      <details><summary>¿Puedo vender a crédito?</summary><p>Sí. Podés fijar un límite de crédito por cliente y llevar el control de lo que te deben, con antigüedad de saldos y estado de cuenta.</p></details>
+      <details><summary>¿Y si me equivoco en una factura?</summary><p>Las facturas no se borran, para que tu contabilidad cuadre. Se anulan indicando el motivo o se corrigen con una nota de crédito. Todo queda registrado.</p></details>
+      <details><summary>¿Mis datos los ve otro negocio?</summary><p>No. Cada negocio tiene su propia base de datos, separada de las demás.</p></details>
+      <details><summary>¿Lo puedo usar desde el teléfono?</summary><p>Sí. Es una aplicación web: el punto de venta y la consulta de stock funcionan desde el teléfono, y en computadora rinde más para la gerencia. No es una app de tienda, se abre desde el navegador.</p></details>
+      <details><summary>¿Reemplaza la factura electrónica de la DGI?</summary><p>No por ahora. Anaquel factura y controla todo tu negocio internamente, pero la integración con facturación fiscal electrónica es un paso posterior que se evalúa según tu régimen. Te lo decimos claro desde el inicio.</p></details>
+      <details><summary>¿Cuánto tarda en estar funcionando?</summary><p>Alrededor de una semana: demo, carga de tu catálogo, capacitación del equipo y arranque.</p></details>
+      <details><summary>¿Y si después necesito algo más?</summary><p>El sistema lo desarrollo yo mismo en Managua, así que me podés pedir mejoras y las conversamos directo, sin call centers.</p></details>
+      <details><summary>¿Cómo pago?</summary><p>Por transferencia bancaria o efectivo, con recibo. La mensualidad se paga el primer día de cada mes.</p></details>
+    </div>
+  </div>
 </section>
 
-<footer>© Anaquel · Managua, Nicaragua · WhatsApp +505 8927 1455</footer>
-</div>
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="w">
+    <span class="micro">07 / Siguiente paso</span>
+    <h2 class="display rv" style="margin-top:20px">Sabé dónde<br>está tu <em>plata.</em></h2>
+    <p class="lead rv" style="margin-top:28px">Escribime por WhatsApp y en 7 minutos te muestro Anaquel funcionando. Sin compromiso y sin presión.</p>
+    <div class="cta">
+      <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel" target="_blank" rel="noopener">Escribir por WhatsApp ↗</a>
+      <a class="btn ghost" href="tel:+50589271455">+505 8927 1455</a>
+    </div>
+  </div>
+</section>
+
+<div class="w"><footer>
+  <span class="micro">© Anaquel · Managua, Nicaragua</span>
+  <span class="micro">Hecho por Kisnner Obando</span>
+</footer></div>
+
+<a class="wa" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel" target="_blank" rel="noopener">WhatsApp ↗</a>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
