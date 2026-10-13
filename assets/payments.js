@@ -34,26 +34,33 @@
     dlg.querySelectorAll('[data-pay-billing-btn]').forEach(function (b) {
       var bill = b.getAttribute('data-pay-billing-btn');
       b.setAttribute('aria-pressed', String(bill === state.billing));
-      b.hidden = !link(state.plan, bill);
+      b.hidden = !(link(state.plan, bill) || bankReady());
     });
     var url = link(state.plan, state.billing);
-    var go = $('[data-pay-go]'), none = $('[data-pay-none]'), terms = $('[data-pay-terms]');
-    go.hidden = !url; terms.hidden = !url; none.hidden = !!url;
-    go.disabled = !$('#pay-ok').checked;
+    var mode = url ? 'link' : (bankReady() ? 'bank' : 'none');
+    var ok = $('#pay-ok').checked;
+    var go = $('[data-pay-go]'), sent = $('[data-pay-sent]'), none = $('[data-pay-none]'), terms = $('[data-pay-terms]');
+    go.hidden = mode !== 'link'; go.disabled = !ok;
+    sent.hidden = mode !== 'bank'; sent.disabled = !ok;
+    terms.hidden = mode === 'none'; none.hidden = mode !== 'none';
+    var tot = money(total(state.plan, state.billing));
     var msg = 'Hola, quiero pagar el plan ' + p.name + ' (' + state.billing + ') de Anaquel';
     $('[data-pay-wa]').href = WA + encodeURIComponent(msg);
+    sent.setAttribute('data-wa', WA + encodeURIComponent('Hola, ya hice la transferencia de Anaquel: plan ' + p.name + ' (' + state.billing + '), total ' + tot + '. Mi negocio es: '));
     var bank = $('[data-pay-bank]');
-    if (bankReady()) {
+    if (bankReady() && mode !== 'none') {
       var b = cfg.bank;
       bank.hidden = false;
-      bank.querySelector('[data-bank-text]').textContent =
-        b.banco + ' · cuenta ' + (b.tipo_cuenta || '') + ' ' + b.numero + ' · a nombre de ' + b.titular + ' (' + (b.moneda || 'USD') + ')';
+      $('[data-bank-banco]').textContent = b.banco;
+      $('[data-bank-cuenta]').textContent = (b.tipo_cuenta ? b.tipo_cuenta + ' · ' : '') + b.numero + ' (' + (b.moneda || 'USD') + ')';
+      $('[data-bank-titular]').textContent = b.titular;
+      $('[data-bank-monto]').textContent = tot;
     } else { bank.hidden = true; }
   }
 
   function open(plan) {
     if (plan && cfg.plans[plan]) state.plan = plan;
-    if (!link(state.plan, state.billing)) state.billing = link(state.plan, 'anual') ? 'anual' : 'mensual';
+    if (!(link(state.plan, state.billing) || bankReady())) state.billing = link(state.plan, 'anual') ? 'anual' : 'mensual';
     $('#pay-ok').checked = false;
     render();
     dlg.showModal();
@@ -62,9 +69,11 @@
   dlg.addEventListener('click', function (e) {
     var t = e.target;
     if (t === dlg) { dlg.close(); return; }
-    var pb = t.closest('[data-pay-plan-btn]'); if (pb) { state.plan = pb.getAttribute('data-pay-plan-btn'); if (!link(state.plan, state.billing)) state.billing = link(state.plan, 'anual') ? 'anual' : 'mensual'; render(); return; }
+    var pb = t.closest('[data-pay-plan-btn]'); if (pb) { state.plan = pb.getAttribute('data-pay-plan-btn'); if (!(link(state.plan, state.billing) || bankReady())) state.billing = link(state.plan, 'anual') ? 'anual' : 'mensual'; render(); return; }
     var bb = t.closest('[data-pay-billing-btn]'); if (bb) { state.billing = bb.getAttribute('data-pay-billing-btn'); render(); return; }
     if (t.closest('[data-pay-close]')) { dlg.close(); return; }
+    var sb = t.closest('[data-pay-sent]');
+    if (sb) { if ($('#pay-ok').checked) window.open(sb.getAttribute('data-wa'), '_blank', 'noopener'); return; }
     if (t.closest('[data-pay-go]')) {
       var url = link(state.plan, state.billing);
       if (url && $('#pay-ok').checked) { window.location.assign(url); }
@@ -78,11 +87,13 @@
       if (!c || c.enabled === false || !c.plans) return;
       cfg = c;
       var any = Object.keys(c.plans).some(function (p) { return link(p, 'mensual') || link(p, 'anual'); });
-      if (!any) return;                      // sin enlaces: todo sigue por WhatsApp
+      if (!any && !bankReady()) return;      // sin enlaces ni cuenta: todo sigue por WhatsApp
       document.querySelectorAll('[data-pay]').forEach(function (btn) {
         var plan = btn.getAttribute('data-pay');
-        if (!(link(plan, 'mensual') || link(plan, 'anual'))) return;
+        var hasLink = link(plan, 'mensual') || link(plan, 'anual');
+        if (!hasLink && !bankReady()) return;
         btn.hidden = false;
+        if (!hasLink) btn.firstChild.textContent = 'pagar por transferencia ';
         btn.addEventListener('click', function () { open(plan); });
         var wa = btn.parentNode.querySelector('a.btn[href^="https://wa.me"]');
         if (wa) { wa.classList.add('outline'); wa.firstChild.textContent = 'consultar por whatsapp '; }

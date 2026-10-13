@@ -452,6 +452,8 @@
   </div>
 </footer>
 
+
+
 <dialog id="pay-dialog" aria-labelledby="pay-title">
   <div class="pay">
     <button type="button" class="pay-close" data-pay-close aria-label="Cerrar">×</button>
@@ -471,13 +473,23 @@
     </div>
     <label class="pay-terms" data-pay-terms><input type="checkbox" id="pay-ok"><span>entiendo que pago el plan y el período elegidos más la instalación, que el servicio empieza cuando se confirma el pago y se agenda la instalación, y que las condiciones de renovación y cancelación se me confirman por escrito antes de iniciar.</span></label>
     <button type="button" class="btn" data-pay-go disabled>ir al pago seguro <span class="arr" aria-hidden="true">↗</span></button>
+    <button type="button" class="btn" data-pay-sent hidden disabled>ya transferí: enviar comprobante por whatsapp <span class="arr" aria-hidden="true">↗</span></button>
     <p class="pay-note" data-pay-none hidden>esta combinación todavía no tiene pago en línea. escribinos y lo resolvemos.</p>
-    <p class="code pay-safe">pagás en la página segura de tu banco o pasarela. anaquel no ve ni guarda los datos de tu tarjeta.</p>
-    <p class="pay-note" data-pay-bank hidden><b>transferencia bancaria:</b> <span data-bank-text></span>. enviá el comprobante por whatsapp.</p>
+    <div class="pay-bank" data-pay-bank hidden>
+      <span class="code accent">datos para la transferencia</span>
+      <div><span>banco</span><b data-bank-banco></b></div>
+      <div><span>cuenta</span><b data-bank-cuenta></b></div>
+      <div><span>a nombre de</span><b data-bank-titular></b></div>
+      <div><span>monto</span><b data-bank-monto></b></div>
+      <p class="code">en la referencia poné el nombre de tu negocio. después enviá el comprobante por whatsapp.</p>
+    </div>
+    <p class="code pay-safe">anaquel no ve ni guarda los datos de tu tarjeta ni de tu banco.</p>
     <p class="pay-note"><a data-pay-wa href="#" target="_blank" rel="noopener">¿preferís pagar por whatsapp o transferencia? escribinos →</a></p>
   </div>
 </dialog>
 <script src="assets/theme.js"></script>
+<script src="assets/payments.js" defer></script>
+<script src="assets/payments.js" defer></script>
 <script src="assets/payments.js" defer></script>
 </body>
 </html>

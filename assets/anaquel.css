@@ -270,5 +270,9 @@ dialog#pay-dialog::backdrop{background:hsl(0 0% 0%/.55)}
 .pay .btn[disabled]{opacity:.45;cursor:not-allowed}
 .pay-note{font-size:13px;color:hsl(var(--muted-foreground));margin-top:12px}
 .pay-safe{display:flex;gap:8px;align-items:center;margin-top:14px}
+.pay-bank{border:1px dashed hsl(var(--border-strong));padding:14px;margin-top:14px;display:grid;gap:8px}
+.pay-bank div{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.pay-bank div span{color:hsl(var(--muted-foreground))}
+.pay-bank b{font-family:var(--font-mono);font-weight:500;text-align:right;word-break:break-all}
 [hidden]{display:none!important}
 .receipt .btn+.btn,.receipt button.btn+a.btn{margin-top:10px}
