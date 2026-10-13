@@ -312,7 +312,7 @@ header.top .burger .i-close{opacity:0}
 header.top .burger[aria-expanded="true"] .i-open{opacity:0}
 header.top .burger[aria-expanded="true"] .i-close{opacity:1}
 
-header.top .drawer{border-top:1px solid hsl(var(--border-strong));background:hsl(var(--canvas));max-height:calc(100dvh - 68px);overflow:auto}
+header.top .drawer{position:absolute;left:0;right:0;top:100%;border-top:1px solid hsl(var(--border-strong));border-bottom:1px solid hsl(var(--foreground));background:hsl(var(--canvas));max-height:calc(100dvh - 69px);overflow:auto;overscroll-behavior:contain}
 header.top .drawer .w{padding-top:18px;padding-bottom:26px;display:grid;gap:14px}
 header.top .drawer nav{display:grid}
 header.top .drawer nav a{display:flex;align-items:center;gap:14px;min-height:60px;padding:0 4px;border-bottom:1px dashed hsl(var(--border-strong));text-decoration:none;color:hsl(var(--foreground));font:600 28px/1 var(--font-display)}
@@ -332,7 +332,7 @@ body.nav-open{overflow:hidden}
   header.top .bar{grid-template-columns:1fr auto}
   header.top nav.menu{display:none}
   header.top .burger{display:grid}
-  header.top .cta{display:none}
+  header.top .actions .cta{display:none}
 }
 @media (max-width:560px){
   header.top .brand small{display:none}
