@@ -247,3 +247,28 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
 .foot-links a{font:400 13px/1.4 var(--font-sans);color:hsl(var(--rail-fg)/.8);text-decoration:none}
 .foot-links a:hover{color:hsl(var(--rail-fg));text-decoration:underline}
 @media (max-width:960px){.two{grid-template-columns:1fr;gap:28px}.pains3,.niches{grid-template-columns:1fr}}
+
+
+/* ---- pagos en línea ---- */
+dialog#pay-dialog{border:1px solid hsl(var(--foreground));border-radius:var(--radius);background:hsl(var(--surface));color:hsl(var(--foreground));padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;margin:auto}
+dialog#pay-dialog::backdrop{background:hsl(0 0% 0%/.55)}
+.pay{padding:26px 24px 22px;position:relative}
+.pay::before{content:"";position:absolute;top:-1px;left:-1px;width:16px;height:3px;background:hsl(var(--foreground))}
+.pay h2{font-size:34px;margin:8px 0 4px}
+.pay-close{position:absolute;top:14px;right:14px;min-height:44px;min-width:44px;border:1px solid hsl(var(--border-strong));background:transparent;color:hsl(var(--foreground));border-radius:var(--radius);cursor:pointer;font:400 18px/1 var(--font-mono)}
+.pay-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.pay-row.two{grid-template-columns:repeat(2,1fr)}
+.pay-opt{min-height:44px;border:1px solid hsl(var(--border-strong));background:hsl(var(--surface-2));color:hsl(var(--foreground));border-radius:var(--radius);cursor:pointer;font:500 14px/1.2 var(--font-sans);padding:8px}
+.pay-opt[aria-pressed="true"]{border-color:hsl(var(--primary));background:hsl(var(--primary)/.12);color:hsl(var(--primary))}
+.pay-sum{border-top:1px solid hsl(var(--foreground));margin-top:14px}
+.pay-sum div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed hsl(var(--border-strong));font-size:14.5px}
+.pay-sum .tot{font:600 30px/1 var(--font-display)}
+.pay-sum .tot span:last-child{color:hsl(var(--primary))}
+.pay-terms{display:flex;gap:10px;align-items:flex-start;margin:16px 0 12px;font-size:13.5px;color:hsl(var(--muted-foreground))}
+.pay-terms input{margin-top:3px;width:18px;height:18px;accent-color:hsl(var(--primary))}
+.pay .btn{width:100%;justify-content:center}
+.pay .btn[disabled]{opacity:.45;cursor:not-allowed}
+.pay-note{font-size:13px;color:hsl(var(--muted-foreground));margin-top:12px}
+.pay-safe{display:flex;gap:8px;align-items:center;margin-top:14px}
+[hidden]{display:none!important}
+.receipt .btn+.btn,.receipt button.btn+a.btn{margin-top:10px}

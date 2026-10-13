@@ -374,6 +374,7 @@
         <div class="price">US$25 <small>/ mes</small><span class="code annual">o US$250 al año · 2 meses gratis</span></div>
         <ul><li><span>1 sucursal y 2 usuarios</span><span>incluido</span></li><li><span>inventario, punto de venta y caja</span><span>incluido</span></li><li><span>cuentas por cobrar con antigüedad</span><span>incluido</span></li><li><span>lector con el celular</span><span>incluido</span></li><li><span>modo sin internet</span><span>incluido</span></li><li><span>tickets y hardware</span><span>incluido</span></li></ul>
         <p class="code" style="margin-bottom:12px">instalación: US$90 (pago único)</p>
+        <button class="btn" type="button" data-pay="esencial" hidden>pagar en línea <span class="arr" aria-hidden="true">↗</span></button>
         <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Esencial%20de%20Anaquel" target="_blank" rel="noopener">elegir esencial <span class="arr" aria-hidden="true">↗</span></a>
       </article>
       <article class="receipt hot">
@@ -382,6 +383,7 @@
         <div class="price">US$49 <small>/ mes</small><span class="code annual">o US$490 al año · 2 meses gratis</span></div>
         <ul><li><span>hasta 3 sucursales y 6 usuarios</span><span>incluido</span></li><li><span>todo lo del plan esencial</span><span>incluido</span></li><li><span>compras y cuentas por pagar</span><span>incluido</span></li><li><span>traslados entre sucursales</span><span>incluido</span></li><li><span>cotizaciones y notas de crédito</span><span>incluido</span></li><li><span>multimoneda y series con garantía</span><span>incluido</span></li><li><span>márgenes y reglas de precio</span><span>incluido</span></li></ul>
         <p class="code" style="margin-bottom:12px">instalación: US$150 (pago único)</p>
+        <button class="btn" type="button" data-pay="negocio" hidden>pagar en línea <span class="arr" aria-hidden="true">↗</span></button>
         <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Negocio%20de%20Anaquel" target="_blank" rel="noopener">elegir negocio <span class="arr" aria-hidden="true">↗</span></a>
       </article>
       <article class="receipt">
@@ -390,6 +392,7 @@
         <div class="price">US$89 <small>/ mes</small><span class="code annual">o US$890 al año · 2 meses gratis</span></div>
         <ul><li><span>hasta 8 sucursales y 15 usuarios</span><span>incluido</span></li><li><span>todo lo del plan negocio</span><span>incluido</span></li><li><span>pronóstico y reposición</span><span>incluido</span></li><li><span>estado de resultados y flujo de caja</span><span>incluido</span></li><li><span>soporte prioritario</span><span>incluido</span></li></ul>
         <p class="code" style="margin-bottom:12px">instalación: US$250 (pago único)</p>
+        <button class="btn" type="button" data-pay="pro" hidden>pagar en línea <span class="arr" aria-hidden="true">↗</span></button>
         <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Pro%20de%20Anaquel" target="_blank" rel="noopener">elegir pro <span class="arr" aria-hidden="true">↗</span></a>
       </article>
     </div>
@@ -448,6 +451,33 @@
     <span class="code">hecho por kisnner obando</span>
   </div>
 </footer>
+
+<dialog id="pay-dialog" aria-labelledby="pay-title">
+  <div class="pay">
+    <button type="button" class="pay-close" data-pay-close aria-label="Cerrar">×</button>
+    <span class="code accent">pago en línea</span>
+    <h2 id="pay-title">pagá tu plan.</h2>
+    <p class="code">elegí el plan y cómo querés pagar</p>
+    <div class="pay-row" role="group" aria-label="Plan"><button type="button" class="pay-opt" data-pay-plan-btn="esencial" aria-pressed="false">esencial</button><button type="button" class="pay-opt" data-pay-plan-btn="negocio" aria-pressed="false">negocio</button><button type="button" class="pay-opt" data-pay-plan-btn="pro" aria-pressed="false">pro</button></div>
+    <div class="pay-row two" role="group" aria-label="Período de pago">
+      <button type="button" class="pay-opt" data-pay-billing-btn="anual" aria-pressed="false">anual · 2 meses gratis</button>
+      <button type="button" class="pay-opt" data-pay-billing-btn="mensual" aria-pressed="false">mensual</button>
+    </div>
+    <div class="pay-sum" aria-live="polite">
+      <div><span>plan <b data-pay-plan></b></span><span data-pay-recurrent></span></div>
+      <div><span data-pay-period></span><span>incluido arriba</span></div>
+      <div><span>instalación (pago único)</span><span data-pay-setup></span></div>
+      <div class="tot"><span>total hoy</span><span data-pay-total></span></div>
+    </div>
+    <label class="pay-terms" data-pay-terms><input type="checkbox" id="pay-ok"><span>entiendo que pago el plan y el período elegidos más la instalación, que el servicio empieza cuando se confirma el pago y se agenda la instalación, y que las condiciones de renovación y cancelación se me confirman por escrito antes de iniciar.</span></label>
+    <button type="button" class="btn" data-pay-go disabled>ir al pago seguro <span class="arr" aria-hidden="true">↗</span></button>
+    <p class="pay-note" data-pay-none hidden>esta combinación todavía no tiene pago en línea. escribinos y lo resolvemos.</p>
+    <p class="code pay-safe">pagás en la página segura de tu banco o pasarela. anaquel no ve ni guarda los datos de tu tarjeta.</p>
+    <p class="pay-note" data-pay-bank hidden><b>transferencia bancaria:</b> <span data-bank-text></span>. enviá el comprobante por whatsapp.</p>
+    <p class="pay-note"><a data-pay-wa href="#" target="_blank" rel="noopener">¿preferís pagar por whatsapp o transferencia? escribinos →</a></p>
+  </div>
+</dialog>
 <script src="assets/theme.js"></script>
+<script src="assets/payments.js" defer></script>
 </body>
 </html>

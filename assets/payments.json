@@ -1,0 +1,46 @@
+{
+  "_ayuda": "Enlaces de pago alojados (https://). Un enlace vacío oculta ese botón de pago.",
+  "enabled": true,
+  "currency": "USD",
+  "links": {
+    "esencial": {
+      "mensual": "",
+      "anual": ""
+    },
+    "negocio": {
+      "mensual": "",
+      "anual": ""
+    },
+    "pro": {
+      "mensual": "",
+      "anual": ""
+    }
+  },
+  "bank": {
+    "banco": "",
+    "tipo_cuenta": "",
+    "numero": "",
+    "titular": "",
+    "moneda": "USD"
+  },
+  "plans": {
+    "esencial": {
+      "name": "Esencial",
+      "month": 25,
+      "year": 250,
+      "setup": 90
+    },
+    "negocio": {
+      "name": "Negocio",
+      "month": 49,
+      "year": 490,
+      "setup": 150
+    },
+    "pro": {
+      "name": "Pro",
+      "month": 89,
+      "year": 890,
+      "setup": 250
+    }
+  }
+}
