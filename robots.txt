@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kisnner26.github.io/anaquel-landing/sitemap.xml

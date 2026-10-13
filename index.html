@@ -1,253 +1,52 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-NI">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>anaquel — control comercial para tu negocio</title>
-<meta name="description" content="Anaquel te muestra cada día cuánto ganaste, quién te debe y qué se te acaba. Inventario, punto de venta, caja, compras, sucursales y reportes en córdobas. Hecho en Managua.">
-<meta property="og:title" content="anaquel — sabé cuánto ganás, no solo cuánto vendés.">
-<meta property="og:description" content="Inventario, punto de venta, caja, cuentas por cobrar y reportes en un solo sistema, en córdobas.">
+<title>Anaquel | Inventario y punto de venta en Nicaragua</title>
+<meta name="description" content="Inventario, punto de venta, caja y cuentas por cobrar en córdobas para negocios de Managua y Nicaragua. Funciona sin internet. Desde US$25 al mes.">
+<link rel="canonical" href="https://kisnner26.github.io/anaquel-landing/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="alternate" hreflang="es-NI" href="https://kisnner26.github.io/anaquel-landing/">
+<link rel="alternate" hreflang="x-default" href="https://kisnner26.github.io/anaquel-landing/">
+<meta name="author" content="Kisnner Obando">
+<meta property="og:site_name" content="Anaquel">
+<meta property="og:locale" content="es_NI">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://kisnner26.github.io/anaquel-landing/assets/dashboard.png">
+<meta property="og:url" content="https://kisnner26.github.io/anaquel-landing/">
+<meta property="og:title" content="Anaquel | Inventario y punto de venta en Nicaragua">
+<meta property="og:description" content="Inventario, punto de venta, caja y cuentas por cobrar en córdobas para negocios de Managua y Nicaragua. Funciona sin internet. Desde US$25 al mes.">
+<meta property="og:image" content="https://kisnner26.github.io/anaquel-landing/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tablero de Anaquel con ventas, utilidad, margen y cuentas por cobrar">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anaquel | Inventario y punto de venta en Nicaragua">
+<meta name="twitter:description" content="Inventario, punto de venta, caja y cuentas por cobrar en córdobas para negocios de Managua y Nicaragua. Funciona sin internet. Desde US$25 al mes.">
+<meta name="twitter:image" content="https://kisnner26.github.io/anaquel-landing/assets/og-image.jpg">
 <meta name="theme-color" content="#ebe8e1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121311" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   Tokens — los mismos del producto (frontend/app/globals.css)
-   papel cálido, tinta oscura y naranja de señalización
-   ============================================================ */
-:root{
-  --canvas:43 19% 92%;--surface:43 40% 98%;--surface-2:43 21% 94%;
-  --foreground:80 9% 13%;--muted:43 16% 89%;--muted-foreground:60 5% 36%;
-  --border:43 12% 78%;--border-strong:60 6% 56%;
-  --primary:16 76% 40%;--primary-foreground:43 40% 98%;
-  --positive:150 46% 29%;--negative:2 67% 42%;--warning:29 82% 31%;--info:200 49% 32%;
-  --rail:70 8% 5%;--rail-fg:43 28% 93%;
-  --radius:2px;
-  --font-display:'Barlow Condensed','Arial Narrow',sans-serif;
-  --font-sans:'IBM Plex Sans',system-ui,sans-serif;
-  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-}
-:root.dark{
-  --canvas:70 8% 7%;--surface:70 7% 11%;--surface-2:70 6% 14%;
-  --foreground:43 28% 93%;--muted:70 6% 18%;--muted-foreground:43 10% 67%;
-  --border:70 5% 26%;--border-strong:43 8% 42%;
-  --primary:20 93% 66%;--primary-foreground:70 8% 7%;
-  --positive:150 43% 64%;--negative:2 78% 71%;--warning:35 82% 65%;--info:200 62% 69%;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{color-scheme:light;scroll-behavior:smooth}
-html.dark{color-scheme:dark}
-body{background:hsl(var(--canvas));color:hsl(var(--foreground));font:400 16px/1.6 var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
-a{color:inherit}
-img{display:block;max-width:100%;height:auto}
-:focus-visible{outline:2px solid hsl(var(--primary));outline-offset:2px}
-.w{max-width:1160px;margin:0 auto;padding:0 24px}
-.tabular{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
-
-/* ---- primitivas del lenguaje ---- */
-.code{font:400 12px/1.4 var(--font-mono);color:hsl(var(--muted-foreground));letter-spacing:.04em}
-.code.accent{color:hsl(var(--primary))}
-.code i{display:inline-block;width:6px;height:6px;border-radius:50%;background:hsl(var(--positive));margin-right:8px;vertical-align:1px}
-h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1;letter-spacing:-.01em}
-.panel{position:relative;border:1px solid hsl(var(--border));background:hsl(var(--surface));border-radius:var(--radius)}
-.panel::before{content:"";position:absolute;top:-1px;left:-1px;width:16px;height:3px;background:hsl(var(--foreground));pointer-events:none}
-.perf{border:0;border-top:1px dashed hsl(var(--border-strong));margin:0}
-.barcode{--bar:hsl(var(--foreground));height:34px;opacity:.82;background-image:repeating-linear-gradient(90deg,var(--bar) 0 1px,transparent 1px 4px,var(--bar) 4px 6px,transparent 6px 9px,var(--bar) 9px 12px,transparent 12px 17px,var(--bar) 17px 18px,transparent 18px 22px)}
-.barcode.thin{height:16px}
-.barcode.light{--bar:rgb(255 255 255/.5);opacity:1}
-.btn{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border-radius:var(--radius);font:500 14px/1 var(--font-sans);text-decoration:none;border:1px solid hsl(var(--primary));background:hsl(var(--primary));color:hsl(var(--primary-foreground));cursor:pointer;transition:filter .15s}
-.btn:hover{filter:brightness(1.08)}
-.btn.outline{background:transparent;color:hsl(var(--foreground));border-color:hsl(var(--border-strong))}
-.btn.outline:hover{border-color:hsl(var(--foreground));filter:none}
-.btn .arr{font-family:var(--font-mono)}
-section{padding:96px 0;border-top:1px solid hsl(var(--foreground))}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:12px}
-.stitle{font-size:clamp(36px,5vw,56px);margin:14px 0 14px}
-.slead{color:hsl(var(--muted-foreground));max-width:60ch;font-size:17px}
-.dashed-top{border-top:1px dashed hsl(var(--border-strong))}
-
-/* ---- barra superior ---- */
-header.top{position:sticky;top:0;z-index:30;background:hsl(var(--canvas)/.94);backdrop-filter:blur(8px);border-bottom:1px solid hsl(var(--foreground))}
-header.top .w{display:flex;align-items:center;gap:20px;min-height:64px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand .barcode{width:30px;height:28px;opacity:.95;background-image:repeating-linear-gradient(90deg,hsl(var(--primary)) 0 2px,transparent 2px 4px,hsl(var(--primary)) 4px 5px,transparent 5px 8px)}
-.brand b{font:600 28px/1 var(--font-display);letter-spacing:-.01em;display:block}
-.brand small{display:block;font:400 9.5px/1 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-top:3px}
-nav.menu{display:flex;gap:4px;margin-left:auto}
-nav.menu a{font:400 12px/1 var(--font-mono);letter-spacing:.06em;text-decoration:none;padding:10px 12px;color:hsl(var(--muted-foreground));border-radius:var(--radius)}
-nav.menu a:hover{color:hsl(var(--foreground));background:hsl(var(--muted))}
-.theme{min-height:44px;min-width:44px;display:grid;place-items:center;border:1px solid hsl(var(--border-strong));background:hsl(var(--surface));color:hsl(var(--foreground));border-radius:var(--radius);cursor:pointer;font:400 11px/1 var(--font-mono)}
-.theme:hover{border-color:hsl(var(--foreground))}
-
-/* ---- hero ---- */
-.hero{border-top:0;padding:64px 0 72px}
-.hero-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:56px;align-items:center}
-.hero h1{font-size:clamp(46px,6.1vw,80px);margin:18px 0 22px;letter-spacing:-.015em}
-.hero h1 em{font-style:normal;color:hsl(var(--primary))}
-.hero .slead{font-size:19px;color:hsl(var(--muted-foreground));margin-bottom:28px}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-.hero-head{display:flex;align-items:center;gap:14px}
-.hero-head .barcode{width:30px;height:38px;opacity:.55}
-.shot{padding:10px}
-.shot img{border:1px solid hsl(var(--border));border-radius:var(--radius)}
-.shot figcaption{padding:10px 4px 2px;display:flex;justify-content:space-between;gap:12px}
-.cutline{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 0;margin-top:56px;border-top:1px dashed hsl(var(--border-strong));border-bottom:1px dashed hsl(var(--border-strong))}
-
-/* ---- tarjetas de cifras ---- */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.stat{padding:24px}
-.stat .v{font:600 56px/1 var(--font-display);margin:14px 0 6px;font-variant-numeric:tabular-nums}
-.stat .d{color:hsl(var(--muted-foreground));font-size:14px}
-.stat .barcode{margin-top:18px;height:16px}
-
-/* ---- problema ---- */
-.pain{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
-.pain .panel{padding:22px}
-.pain .n{font:500 12px/1 var(--font-mono);color:hsl(var(--negative))}
-.pain h3{font-size:26px;margin:14px 0 8px}
-.pain p{font-size:14px;color:hsl(var(--muted-foreground))}
-
-/* ---- funciones ---- */
-.feat{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center;padding:56px 0;border-top:1px dashed hsl(var(--border-strong))}
-.feat:first-of-type{border-top:0;padding-top:40px}
-.feat.rev .txt{order:2}
-.feat h3{font-size:clamp(32px,4vw,46px);margin:12px 0 14px}
-.feat h3 em{font-style:normal;color:hsl(var(--primary))}
-.feat p.lead{color:hsl(var(--muted-foreground));margin-bottom:18px;max-width:46ch}
-.feat ul{list-style:none;border-top:1px solid hsl(var(--foreground))}
-.feat li{position:relative;padding:10px 0 10px 22px;border-bottom:1px dashed hsl(var(--border-strong));font-size:14.5px}
-.feat li::before{content:"›";position:absolute;left:4px;top:10px;font-family:var(--font-mono);color:hsl(var(--primary))}
-.vis{padding:14px}
-.vis .cap{margin-top:10px}
-
-/* mini-interfaces (mismos componentes del producto) */
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.tile{position:relative;border:1px solid hsl(var(--border));background:hsl(var(--surface));padding:12px 14px;border-radius:var(--radius)}
-.tile::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:3px;background:hsl(var(--foreground))}
-.tile .k{font:400 11px/1 var(--font-sans);color:hsl(var(--muted-foreground));margin-bottom:10px}
-.tile .v{font:600 28px/1 var(--font-display);font-variant-numeric:tabular-nums}
-.pos{color:hsl(var(--positive))}.neg{color:hsl(var(--negative))}.warn{color:hsl(var(--warning))}.inf{color:hsl(var(--info))}
-table.ledger{width:100%;border-collapse:collapse;font-size:13.5px}
-table.ledger th{font:500 11px/1 var(--font-mono);letter-spacing:.06em;color:hsl(var(--muted-foreground));text-align:left;padding:10px 8px;border-bottom:1px solid hsl(var(--foreground));text-transform:lowercase}
-table.ledger td{padding:11px 8px;border-bottom:1px dashed hsl(var(--border-strong))}
-table.ledger tr:nth-child(even) td{background:hsl(var(--surface-2)/.6)}
-table.ledger td.r,table.ledger th.r{text-align:right;font-variant-numeric:tabular-nums}
-.badge{display:inline-block;font:500 11px/1 var(--font-mono);padding:4px 7px;border-radius:var(--radius);border:1px solid currentColor}
-.aging{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-.aging .tile{padding:10px}
-.aging .tile .v{font-size:22px}
-.fl{display:grid;gap:0}
-.fl .st{display:flex;gap:14px;align-items:flex-start;padding:13px 4px;border-bottom:1px dashed hsl(var(--border-strong));font-size:14px}
-.fl .st b{font:500 12px/1.6 var(--font-mono);color:hsl(var(--primary));flex:none}
-.cash3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-
-/* ---- más ---- */
-.more{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.more .panel{padding:22px}
-.more h4{font:600 24px/1.05 var(--font-display);margin:12px 0 8px}
-.more p{font-size:14px;color:hsl(var(--muted-foreground))}
-
-/* ---- claro/oscuro/móvil ---- */
-.modes{display:grid;grid-template-columns:1fr 1fr 220px;gap:20px;align-items:start;margin-top:40px}
-.modes .panel{padding:10px}
-
-/* ---- comparación ---- */
-.cmp{margin-top:36px;overflow-x:auto}
-.cmp table{min-width:680px}
-.cmp td:nth-child(4),.cmp th:nth-child(4){background:hsl(var(--primary)/.08)}
-.cmp td:nth-child(4){font-weight:500}
-.cmp th:nth-child(4){color:hsl(var(--primary))}
-.cmp td:not(:first-child):not(:nth-child(4)){color:hsl(var(--muted-foreground))}
-
-/* ---- pasos ---- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
-.steps .panel{padding:22px}
-.steps b{font:600 56px/1 var(--font-display);color:hsl(var(--primary))}
-.steps h4{font:600 24px/1.05 var(--font-display);margin:10px 0 8px}
-.steps p{font-size:14px;color:hsl(var(--muted-foreground))}
-
-/* ---- precios: comprobantes ---- */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;align-items:start}
-.receipt{--tooth:11px;position:relative;background:hsl(var(--surface));border:1px solid hsl(var(--border));padding:26px 24px calc(30px + var(--tooth));
-  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,linear-gradient(45deg,#000 49%,transparent 51%) bottom left/var(--tooth) var(--tooth) repeat-x,linear-gradient(-45deg,#000 49%,transparent 51%) bottom left/var(--tooth) var(--tooth) repeat-x;
-  mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,linear-gradient(45deg,#000 49%,transparent 51%) bottom left/var(--tooth) var(--tooth) repeat-x,linear-gradient(-45deg,#000 49%,transparent 51%) bottom left/var(--tooth) var(--tooth) repeat-x}
-.plans-wrap{filter:drop-shadow(0 14px 22px hsl(28 45% 4%/.18))}
-.receipt.hot{border-color:hsl(var(--primary));border-width:2px}
-.receipt h3{font-size:34px;margin:10px 0 4px}
-.receipt .price{font:600 72px/1 var(--font-display);margin:18px 0 4px;font-variant-numeric:tabular-nums}
-.receipt .price small{font:400 12px/1 var(--font-mono);color:hsl(var(--muted-foreground));letter-spacing:.04em}
-.receipt ul{list-style:none;margin:18px 0 22px;border-top:1px dashed hsl(var(--border-strong))}
-.receipt li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed hsl(var(--border-strong));font-size:14px}
-.receipt li span:last-child{font-family:var(--font-mono);color:hsl(var(--positive));font-size:12px}
-.receipt .btn{width:100%;justify-content:center}
-.tag{position:absolute;top:12px;right:14px}
-.setup{margin-top:28px;padding:20px 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
-.setup b{font:600 30px/1 var(--font-display)}
-.setup span{color:hsl(var(--muted-foreground));font-size:14.5px;max-width:640px}
-
-/* ---- faq ---- */
-.faq{margin-top:32px;border-top:1px solid hsl(var(--foreground))}
-details{border-bottom:1px dashed hsl(var(--border-strong));padding:20px 0}
-summary{list-style:none;cursor:pointer;font:600 22px/1.2 var(--font-display);display:flex;justify-content:space-between;gap:20px;align-items:center}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font:400 22px/1 var(--font-mono);color:hsl(var(--primary))}
-details[open] summary::after{content:"–"}
-details p{margin-top:12px;color:hsl(var(--muted-foreground));max-width:70ch;font-size:15.5px}
-
-/* ---- cierre ---- */
-.final{background:hsl(var(--rail));color:hsl(var(--rail-fg));border-top:0;padding:96px 0}
-.final .code{color:hsl(var(--rail-fg)/.6)}
-.final h2{font-size:clamp(48px,8vw,104px);margin:18px 0 20px}
-.final h2 em{font-style:normal;color:hsl(20 93% 66%)}
-.final p{color:hsl(var(--rail-fg)/.72);max-width:54ch;font-size:18px;margin-bottom:28px}
-.final .btn{background:hsl(20 93% 66%);border-color:hsl(20 93% 66%);color:hsl(70 8% 7%)}
-.final .btn.outline{background:transparent;color:hsl(var(--rail-fg));border-color:hsl(var(--rail-fg)/.4)}
-footer.foot{background:hsl(var(--rail));color:hsl(var(--rail-fg));padding:0 0 32px}
-footer.foot .w{border-top:1px dashed hsl(var(--rail-fg)/.25);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
-footer.foot .barcode{width:160px}
-footer.foot .code{color:hsl(var(--rail-fg)/.6)}
-
-/* ---- responsive ---- */
-@media (max-width:960px){
-  nav.menu{display:none}
-  .theme{margin-left:auto}
-  .hero{padding:40px 0 56px}
-  .hero-grid,.feat{grid-template-columns:1fr;gap:32px}
-  .feat.rev .txt{order:0}
-  .stats,.more,.plans{grid-template-columns:1fr}
-  .pain,.steps{grid-template-columns:1fr 1fr}
-  .modes{grid-template-columns:1fr 1fr}.modes .mobile{grid-column:1/-1;max-width:260px}
-  section{padding:68px 0}
-  .plans{gap:32px}
-}
-@media (max-width:560px){
-  .w{padding:0 16px}
-  .pain,.steps,.modes{grid-template-columns:1fr}
-  .kpis{grid-template-columns:1fr 1fr}
-  .aging{grid-template-columns:1fr 1fr}
-  .cash3{grid-template-columns:1fr}
-  header.top .w{gap:12px}
-  .brand small{display:none}
-}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-</style>
+<link rel="stylesheet" href="assets/anaquel.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://kisnner26.github.io/anaquel-landing/#org","name":"Anaquel","url":"https://kisnner26.github.io/anaquel-landing/","logo":"https://kisnner26.github.io/anaquel-landing/assets/favicon.svg","founder":{"@type":"Person","name":"Kisnner Obando"},"areaServed":[{"@type":"City","name":"Managua"},{"@type":"Country","name":"Nicaragua"}],"contactPoint":{"@type":"ContactPoint","telephone":"+505-8927-1455","contactType":"sales","availableLanguage":"es"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","@id":"https://kisnner26.github.io/anaquel-landing/#app","name":"Anaquel","alternateName":"Anaquel control comercial","applicationCategory":"BusinessApplication","operatingSystem":"Web, Android, iOS (aplicación web instalable)","inLanguage":"es-NI","url":"https://kisnner26.github.io/anaquel-landing/","description":"Sistema de inventario, punto de venta, caja, compras, cuentas por cobrar y reportes en córdobas para comercios de Nicaragua.","image":"https://kisnner26.github.io/anaquel-landing/assets/og-image.jpg","publisher":{"@id":"https://kisnner26.github.io/anaquel-landing/#org"},"featureList":["Inventario multi-sucursal","Punto de venta con lector de códigos","Caja con arqueo","Cuentas por cobrar con antigüedad de saldos","Modo sin internet","Series y garantía por unidad","Pronóstico y reposición","Multimoneda","Estados financieros"],"offers":{"@type":"AggregateOffer","lowPrice":"25","highPrice":"89","priceCurrency":"USD","offerCount":3,"offers":[{"@type":"Offer","name":"Plan esencial","price":"25","priceCurrency":"USD","priceSpecification":{"@type":"UnitPriceSpecification","price":"25","priceCurrency":"USD","billingDuration":"P1M","unitCode":"MON"},"url":"https://kisnner26.github.io/anaquel-landing/#precios","availability":"https://schema.org/InStock"},{"@type":"Offer","name":"Plan negocio","price":"49","priceCurrency":"USD","priceSpecification":{"@type":"UnitPriceSpecification","price":"49","priceCurrency":"USD","billingDuration":"P1M","unitCode":"MON"},"url":"https://kisnner26.github.io/anaquel-landing/#precios","availability":"https://schema.org/InStock"},{"@type":"Offer","name":"Plan pro","price":"89","priceCurrency":"USD","priceSpecification":{"@type":"UnitPriceSpecification","price":"89","priceCurrency":"USD","billingDuration":"P1M","unitCode":"MON"},"url":"https://kisnner26.github.io/anaquel-landing/#precios","availability":"https://schema.org/InStock"}]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿funciona con varias sucursales?","acceptedAnswer":{"@type":"Answer","text":"Sí. Cada sucursal maneja su propio stock, su caja y sus folios. Vos ves todo consolidado o filtrado por sucursal, y podés mover mercadería entre locales con traslados."}},{"@type":"Question","name":"¿puedo vender a crédito?","acceptedAnswer":{"@type":"Answer","text":"Sí. Podés fijar un límite de crédito por cliente y llevar el control de lo que te deben, con antigüedad de saldos y estado de cuenta."}},{"@type":"Question","name":"¿y si me equivoco en una factura?","acceptedAnswer":{"@type":"Answer","text":"Las facturas no se borran, para que tu contabilidad cuadre. Se anulan indicando el motivo o se corrigen con una nota de crédito. Todo queda registrado."}},{"@type":"Question","name":"¿funciona sin internet?","acceptedAnswer":{"@type":"Answer","text":"Sí. Si se cae el internet, la caja sigue vendiendo: las ventas se guardan en ese equipo y se envían solas, sin duplicarse, cuando vuelve la red. Ojo: las ventas pendientes viven en el navegador de esa caja; si cambiás de equipo antes de que se sincronicen, no se transfieren."}},{"@type":"Question","name":"¿mis datos los ve otro negocio?","acceptedAnswer":{"@type":"Answer","text":"No. Cada negocio tiene su propia base de datos, separada de las demás."}},{"@type":"Question","name":"¿lo puedo usar desde el teléfono?","acceptedAnswer":{"@type":"Answer","text":"Sí. Es una aplicación web instalable: el punto de venta y la consulta de stock funcionan desde el teléfono, y en computadora rinde más para la gerencia. Además podés usar la cámara del celular como lector de códigos de barras."}},{"@type":"Question","name":"¿sirve para mi tipo de negocio?","acceptedAnswer":{"@type":"Answer","text":"Cada negocio elige su giro y el sistema ajusta el vocabulario y los datos que pide: talla y color en ropa, VIN y año en vehículos, serie y garantía en electrónica, caducidad en pulpería y principio activo en farmacia. También hay perfil de ferretería, perfumería y uno general."}},{"@type":"Question","name":"¿reemplaza la factura electrónica de la dgi?","acceptedAnswer":{"@type":"Answer","text":"No por ahora. Anaquel factura y controla todo tu negocio internamente, pero la integración con facturación fiscal electrónica es un paso posterior que se evalúa según tu régimen. Te lo decimos claro desde el inicio."}},{"@type":"Question","name":"¿se puede cobrar con tarjeta desde el sistema?","acceptedAnswer":{"@type":"Answer","text":"Todavía no con un banco real. El sistema registra el cobro con tarjeta como forma de pago, pero no está conectado a un procesador de pagos. Hoy se usa tu datáfono de siempre y se registra la venta."}},{"@type":"Question","name":"¿puedo cambiar de plan?","acceptedAnswer":{"@type":"Answer","text":"Sí. Podés subir de plan cuando tu negocio lo necesite, por ejemplo al abrir una segunda sucursal."}},{"@type":"Question","name":"¿cuánto tarda en estar funcionando?","acceptedAnswer":{"@type":"Answer","text":"Alrededor de una semana: demo, carga de tu catálogo, capacitación del equipo y arranque."}},{"@type":"Question","name":"¿y si después necesito algo más?","acceptedAnswer":{"@type":"Answer","text":"El sistema lo desarrollo yo mismo en Managua, así que me podés pedir mejoras y las conversamos directo, sin call centers."}},{"@type":"Question","name":"¿cómo pago?","acceptedAnswer":{"@type":"Answer","text":"Por transferencia bancaria o efectivo, con recibo. Podés pagar mes a mes o por año adelantado y ahorrar dos meses."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Anaquel","url":"https://kisnner26.github.io/anaquel-landing/","inLanguage":"es-NI","publisher":{"@id":"https://kisnner26.github.io/anaquel-landing/#org"}}</script>
 </head>
 <body>
-
 <header class="top">
   <div class="w">
-    <a class="brand" href="#top" aria-label="anaquel, inicio">
+    <a class="brand" href="./" aria-label="anaquel, inicio">
       <span class="barcode" aria-hidden="true"></span>
       <span><b>anaquel</b><small>control comercial</small></span>
     </a>
     <nav class="menu" aria-label="Secciones">
       <a href="#funciones">funciones</a>
+      <a href="#giros">tu giro</a>
       <a href="#comparar">vs. cuaderno</a>
-      <a href="#proceso">cómo empezamos</a>
       <a href="#precios">precios</a>
       <a href="#faq">preguntas</a>
     </nav>
@@ -268,14 +67,14 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
           <span class="code accent"><i></i>anaquel / centro de control</span>
         </div>
         <h1>sabé cuánto <em>ganás</em>, no solo cuánto vendés.</h1>
-        <p class="slead">inventario, punto de venta, caja y cuentas por cobrar en un solo sistema. en córdobas, sin excel y sin esperar al contador. te lo dejo funcionando en tu negocio en una semana.</p>
+        <p class="slead">inventario, punto de venta, caja y cuentas por cobrar en un solo sistema. sistema de inventario y punto de venta para comercios de nicaragua, en córdobas y sin excel. te lo dejo funcionando en tu negocio en una semana.</p>
         <div class="cta">
           <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20ver%20la%20demo%20de%20Anaquel" target="_blank" rel="noopener">ver demo de 7 minutos <span class="arr" aria-hidden="true">↗</span></a>
           <a class="btn outline" href="#funciones">ver todo lo que hace <span class="arr" aria-hidden="true">→</span></a>
         </div>
       </div>
       <figure class="panel shot">
-        <img src="assets/dashboard.png" width="1024" height="720" alt="Tablero de Anaquel: ventas registradas, utilidad, margen, por cobrar, por pagar, efectivo y bajo mínimo.">
+        <img src="assets/dashboard.png" width="1024" height="720" fetchpriority="high" alt="Tablero de Anaquel: ventas registradas, utilidad, margen, por cobrar, por pagar, efectivo y bajo mínimo.">
         <figcaption><span class="code">captura real del sistema</span><span class="code">datos de demostración</span></figcaption>
       </figure>
     </div>
@@ -492,6 +291,15 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
       <div class="panel"><span class="code accent">catálogo</span><h4>orden total.</h4><p>productos con categorías, marcas y unidades de medida, listos para buscar en segundos.</p></div>
       <div class="panel"><span class="code accent">proveedores</span><h4>qué le debés a quién.</h4><p>cuentas por pagar y estado de cuenta de cada proveedor, con pagos registrados.</p></div>
       <div class="panel"><span class="code accent">reportes</span><h4>dónde está tu dinero.</h4><p>qué producto, qué cliente y qué sucursal te dejan plata. sin esperar al contador.</p></div>
+      <div class="panel"><span class="tagp">desde esencial</span><br><span class="code accent">sin internet</span><h4>la caja sigue vendiendo.</h4><p>si se cae el internet, las ventas se guardan en el equipo y se envían solas al volver la red, sin duplicarse.</p></div>
+      <div class="panel"><span class="tagp">desde esencial</span><br><span class="code accent">lector con el celular</span><h4>tu teléfono es el lector.</h4><p>escaneás un qr en la caja y usás la cámara del celular para leer códigos de barras.</p></div>
+      <div class="panel"><span class="tagp">desde esencial</span><br><span class="code accent">hardware</span><h4>impresora, cajón y balanza.</h4><p>se conectan desde el navegador y se configuran en gerencia, sin drivers ni programas intermedios.</p></div>
+      <div class="panel"><span class="tagp">desde negocio</span><br><span class="code accent">multimoneda</span><h4>córdobas y dólares.</h4><p>tipo de cambio configurable y documentos que muestran la moneda en la que se vendió o compró.</p></div>
+      <div class="panel"><span class="tagp">desde negocio</span><br><span class="code accent">series y garantía</span><h4>cada equipo con su serie.</h4><p>imei, vin u otra serie por unidad: entra, se vende y se consulta con su garantía.</p></div>
+      <div class="panel"><span class="tagp">desde negocio</span><br><span class="code accent">precios y márgenes</span><h4>que el costo no te coma la ganancia.</h4><p>reglas de precio, repricing al cambiar el costo y márgenes por producto.</p></div>
+      <div class="panel"><span class="tagp">desde negocio</span><br><span class="code accent">tu giro</span><h4>el sistema habla tu idioma.</h4><p>ferretería, pulpería, ropa, electrónica, farmacia, perfumería, vehículos o general: vocabulario y datos propios.</p></div>
+      <div class="panel"><span class="tagp">desde pro</span><br><span class="code accent">pronóstico</span><h4>cuánto pedir y cuándo.</h4><p>estima cuánto vas a vender, cuándo se acaba cada producto y cuánto conviene reponer.</p></div>
+      <div class="panel"><span class="tagp">desde pro</span><br><span class="code accent">estados financieros</span><h4>tu ganancia real.</h4><p>estado de resultados y flujo de caja con tus ventas, costos y gastos operativos.</p></div>
     </div>
   </div>
 </section>
@@ -510,10 +318,19 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
   </div>
 </section>
 
+<section id="giros">
+  <div class="w">
+    <div class="sec-head"><span class="code">04 / tu giro</span><span class="code">hecho para comercios de nicaragua</span></div>
+    <h2 class="stitle">para tu tipo de negocio.</h2>
+    <p class="slead">cada giro tiene sus propias necesidades. mirá cómo anaquel resuelve las tuyas.</p>
+    <div class="niches"><a class="panel" href="ferreterias/"><span class="code accent">giro / 01</span><h3>ferreterías</h3><p>miles de productos, costos que cambian cada mes y clientes que te deben. anaquel te muestra qué te deja plata, a quién cobrarle y qué reponer.</p></a><a class="panel" href="pulperias/"><span class="code accent">giro / 02</span><h3>pulperías y minisúper</h3><p>mucho movimiento, poco margen por producto y clientes que pagan después. anaquel hace que cobrar tome un segundo y que la caja cuadre al cerrar.</p></a><a class="panel" href="distribuidoras/"><span class="code accent">giro / 03</span><h3>distribuidoras y mayoristas</h3><p>una distribuidora vive de rotar mercadería y cobrar a tiempo. anaquel te muestra a quién cobrarle hoy, qué se está acabando y qué sucursal vende más.</p></a><a class="panel" href="celulares-y-electronica/"><span class="code accent">giro / 04</span><h3>tiendas de celulares y electrónica</h3><p>un celular se identifica por su imei, no por su nombre. anaquel registra cada unidad desde que entra hasta que se vende y guarda hasta cuándo dura su garantía.</p></a><a class="panel" href="tiendas-de-ropa/"><span class="code accent">giro / 05</span><h3>tiendas de ropa</h3><p>en una tienda de ropa lo que se vende hoy no es lo que conviene reponer mañana. anaquel te muestra qué te deja margen y qué se está acabando.</p></a></div>
+  </div>
+</section>
+
 <!-- ===== COMPARAR ===== -->
 <section id="comparar">
   <div class="w">
-    <div class="sec-head"><span class="code">04 / comparación</span><span class="code">cuaderno · excel · anaquel</span></div>
+    <div class="sec-head"><span class="code">05 / comparación</span><span class="code">cuaderno · excel · anaquel</span></div>
     <h2 class="stitle">tu cuaderno no te avisa.</h2>
     <div class="cmp panel" style="padding:8px 14px">
       <table class="ledger">
@@ -533,7 +350,7 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
 <!-- ===== PROCESO ===== -->
 <section id="proceso">
   <div class="w">
-    <div class="sec-head"><span class="code">05 / cómo empezamos</span><span class="code">sin complicaciones</span></div>
+    <div class="sec-head"><span class="code">06 / cómo empezamos</span><span class="code">sin complicaciones</span></div>
     <h2 class="stitle">en una semana ya estás vendiendo.</h2>
     <div class="steps">
       <div class="panel"><b>01</b><h4>demo de 7 minutos</h4><p>te lo muestro con números de ejemplo, por videollamada o en tu local.</p></div>
@@ -547,55 +364,39 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
 <!-- ===== PRECIOS ===== -->
 <section id="precios">
   <div class="w">
-    <div class="sec-head"><span class="code">06 / precios</span><span class="code">en dólares · sin letra chica</span></div>
+    <div class="sec-head"><span class="code">07 / precios</span><span class="code">en dólares · pagás por año y ahorrás 2 meses</span></div>
     <h2 class="stitle">pagás por lo que necesitás.</h2>
     <div class="plans-wrap">
     <div class="plans">
       <article class="receipt">
         <span class="code">plan / 001</span>
-        <h3>básico</h3><span class="code">para un solo local</span>
-        <div class="price">US$19 <small>/ mes</small></div>
-        <ul>
-          <li><span>1 sucursal y 2 usuarios</span><span>incluido</span></li>
-          <li><span>inventario y punto de venta</span><span>incluido</span></li>
-          <li><span>caja y arqueo</span><span>incluido</span></li>
-          <li><span>cuentas por cobrar</span><span>incluido</span></li>
-          <li><span>soporte por whatsapp</span><span>incluido</span></li>
-        </ul>
-        <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20B%C3%A1sico%20de%20Anaquel" target="_blank" rel="noopener">elegir básico <span class="arr" aria-hidden="true">↗</span></a>
+        <h3>esencial</h3><span class="code">para un solo local</span>
+        <div class="price">US$25 <small>/ mes</small><span class="code annual">o US$250 al año · 2 meses gratis</span></div>
+        <ul><li><span>1 sucursal y 2 usuarios</span><span>incluido</span></li><li><span>inventario, punto de venta y caja</span><span>incluido</span></li><li><span>cuentas por cobrar con antigüedad</span><span>incluido</span></li><li><span>lector con el celular</span><span>incluido</span></li><li><span>modo sin internet</span><span>incluido</span></li><li><span>tickets y hardware</span><span>incluido</span></li></ul>
+        <p class="code" style="margin-bottom:12px">instalación: US$90 (pago único)</p>
+        <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Esencial%20de%20Anaquel" target="_blank" rel="noopener">elegir esencial <span class="arr" aria-hidden="true">↗</span></a>
       </article>
       <article class="receipt hot">
-        <span class="code accent tag">más elegido</span>
-        <span class="code">plan / 002</span>
+        <span class="code accent tag">más elegido</span><span class="code">plan / 002</span>
         <h3>negocio</h3><span class="code">para crecer con orden</span>
-        <div class="price">US$35 <small>/ mes</small></div>
-        <ul>
-          <li><span>hasta 3 sucursales y 6 usuarios</span><span>incluido</span></li>
-          <li><span>todo lo del plan básico</span><span>incluido</span></li>
-          <li><span>compras y cuentas por pagar</span><span>incluido</span></li>
-          <li><span>traslados entre sucursales</span><span>incluido</span></li>
-          <li><span>cotizaciones y notas de crédito</span><span>incluido</span></li>
-          <li><span>reportes completos</span><span>incluido</span></li>
-        </ul>
+        <div class="price">US$49 <small>/ mes</small><span class="code annual">o US$490 al año · 2 meses gratis</span></div>
+        <ul><li><span>hasta 3 sucursales y 6 usuarios</span><span>incluido</span></li><li><span>todo lo del plan esencial</span><span>incluido</span></li><li><span>compras y cuentas por pagar</span><span>incluido</span></li><li><span>traslados entre sucursales</span><span>incluido</span></li><li><span>cotizaciones y notas de crédito</span><span>incluido</span></li><li><span>multimoneda y series con garantía</span><span>incluido</span></li><li><span>márgenes y reglas de precio</span><span>incluido</span></li></ul>
+        <p class="code" style="margin-bottom:12px">instalación: US$150 (pago único)</p>
         <a class="btn" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Negocio%20de%20Anaquel" target="_blank" rel="noopener">elegir negocio <span class="arr" aria-hidden="true">↗</span></a>
       </article>
       <article class="receipt">
         <span class="code">plan / 003</span>
-        <h3>a tu medida</h3><span class="code">más sucursales o necesidades</span>
-        <div class="price" style="font-size:54px">hablemos</div>
-        <ul>
-          <li><span>más de 3 sucursales</span><span>a medida</span></li>
-          <li><span>más usuarios</span><span>a medida</span></li>
-          <li><span>necesidades de tu rubro</span><span>a medida</span></li>
-          <li><span>plan según tu operación</span><span>a medida</span></li>
-        </ul>
-        <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20quiero%20un%20plan%20a%20medida%20de%20Anaquel" target="_blank" rel="noopener">consultar <span class="arr" aria-hidden="true">↗</span></a>
+        <h3>pro</h3><span class="code">para varias sucursales</span>
+        <div class="price">US$89 <small>/ mes</small><span class="code annual">o US$890 al año · 2 meses gratis</span></div>
+        <ul><li><span>hasta 8 sucursales y 15 usuarios</span><span>incluido</span></li><li><span>todo lo del plan negocio</span><span>incluido</span></li><li><span>pronóstico y reposición</span><span>incluido</span></li><li><span>estado de resultados y flujo de caja</span><span>incluido</span></li><li><span>soporte prioritario</span><span>incluido</span></li></ul>
+        <p class="code" style="margin-bottom:12px">instalación: US$250 (pago único)</p>
+        <a class="btn outline" href="https://wa.me/50589271455?text=Hola%2C%20me%20interesa%20el%20plan%20Pro%20de%20Anaquel" target="_blank" rel="noopener">elegir pro <span class="arr" aria-hidden="true">↗</span></a>
       </article>
     </div>
     </div>
     <div class="panel setup">
-      <div><span class="code accent">cargo único</span><br><b>instalación · US$120</b></div>
-      <span>cargamos tus productos, clientes y proveedores, configuramos tu sucursal y capacitamos a tu equipo. incluye el primer mes de acompañamiento.</span>
+      <div><span class="code accent">cargo único</span><br><b>instalación · desde US$90</b></div>
+      <span>US$90 en esencial, US$150 en negocio y US$250 en pro. cargamos tu catálogo (hasta unos 500 productos), configuramos tu giro y tu hardware, capacitamos a tu equipo e incluimos el primer mes de acompañamiento. más de 500 productos: lo cotizamos.</span>
     </div>
   </div>
 </section>
@@ -603,18 +404,23 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
 <!-- ===== FAQ ===== -->
 <section id="faq">
   <div class="w">
-    <div class="sec-head"><span class="code">07 / preguntas</span><span class="code">respuestas directas</span></div>
+    <div class="sec-head"><span class="code">08 / preguntas</span><span class="code">respuestas directas</span></div>
     <h2 class="stitle">lo que nos preguntan.</h2>
     <div class="faq">
-      <details><summary>¿funciona con varias sucursales?</summary><p>sí. cada sucursal maneja su propio stock, su caja y sus folios. vos ves todo consolidado o filtrado por sucursal, y podés mover mercadería entre locales con traslados.</p></details>
-      <details><summary>¿puedo vender a crédito?</summary><p>sí. podés fijar un límite de crédito por cliente y llevar el control de lo que te deben, con antigüedad de saldos y estado de cuenta.</p></details>
-      <details><summary>¿y si me equivoco en una factura?</summary><p>las facturas no se borran, para que tu contabilidad cuadre. se anulan indicando el motivo o se corrigen con una nota de crédito. todo queda registrado.</p></details>
-      <details><summary>¿mis datos los ve otro negocio?</summary><p>no. cada negocio tiene su propia base de datos, separada de las demás.</p></details>
-      <details><summary>¿lo puedo usar desde el teléfono?</summary><p>sí. es una aplicación web: el punto de venta y la consulta de stock funcionan desde el teléfono, y en computadora rinde más para la gerencia. no es una app de tienda; se abre desde el navegador.</p></details>
-      <details><summary>¿reemplaza la factura electrónica de la dgi?</summary><p>no por ahora. anaquel factura y controla todo tu negocio internamente, pero la integración con facturación fiscal electrónica es un paso posterior que se evalúa según tu régimen. te lo decimos claro desde el inicio.</p></details>
-      <details><summary>¿cuánto tarda en estar funcionando?</summary><p>alrededor de una semana: demo, carga de tu catálogo, capacitación del equipo y arranque.</p></details>
-      <details><summary>¿y si después necesito algo más?</summary><p>el sistema lo desarrollo yo mismo en managua, así que me podés pedir mejoras y las conversamos directo, sin call centers.</p></details>
-      <details><summary>¿cómo pago?</summary><p>por transferencia bancaria o efectivo, con recibo. la mensualidad se paga el primer día de cada mes.</p></details>
+      <details><summary>¿funciona con varias sucursales?</summary><p>Sí. Cada sucursal maneja su propio stock, su caja y sus folios. Vos ves todo consolidado o filtrado por sucursal, y podés mover mercadería entre locales con traslados.</p></details>
+      <details><summary>¿puedo vender a crédito?</summary><p>Sí. Podés fijar un límite de crédito por cliente y llevar el control de lo que te deben, con antigüedad de saldos y estado de cuenta.</p></details>
+      <details><summary>¿y si me equivoco en una factura?</summary><p>Las facturas no se borran, para que tu contabilidad cuadre. Se anulan indicando el motivo o se corrigen con una nota de crédito. Todo queda registrado.</p></details>
+      <details><summary>¿funciona sin internet?</summary><p>Sí. Si se cae el internet, la caja sigue vendiendo: las ventas se guardan en ese equipo y se envían solas, sin duplicarse, cuando vuelve la red. Ojo: las ventas pendientes viven en el navegador de esa caja; si cambiás de equipo antes de que se sincronicen, no se transfieren.</p></details>
+      <details><summary>¿mis datos los ve otro negocio?</summary><p>No. Cada negocio tiene su propia base de datos, separada de las demás.</p></details>
+      <details><summary>¿lo puedo usar desde el teléfono?</summary><p>Sí. Es una aplicación web instalable: el punto de venta y la consulta de stock funcionan desde el teléfono, y en computadora rinde más para la gerencia. Además podés usar la cámara del celular como lector de códigos de barras.</p></details>
+      <details><summary>¿sirve para mi tipo de negocio?</summary><p>Cada negocio elige su giro y el sistema ajusta el vocabulario y los datos que pide: talla y color en ropa, VIN y año en vehículos, serie y garantía en electrónica, caducidad en pulpería y principio activo en farmacia. También hay perfil de ferretería, perfumería y uno general.</p></details>
+      <details><summary>¿reemplaza la factura electrónica de la dgi?</summary><p>No por ahora. Anaquel factura y controla todo tu negocio internamente, pero la integración con facturación fiscal electrónica es un paso posterior que se evalúa según tu régimen. Te lo decimos claro desde el inicio.</p></details>
+      <details><summary>¿se puede cobrar con tarjeta desde el sistema?</summary><p>Todavía no con un banco real. El sistema registra el cobro con tarjeta como forma de pago, pero no está conectado a un procesador de pagos. Hoy se usa tu datáfono de siempre y se registra la venta.</p></details>
+      <details><summary>¿puedo cambiar de plan?</summary><p>Sí. Podés subir de plan cuando tu negocio lo necesite, por ejemplo al abrir una segunda sucursal.</p></details>
+      <details><summary>¿cuánto tarda en estar funcionando?</summary><p>Alrededor de una semana: demo, carga de tu catálogo, capacitación del equipo y arranque.</p></details>
+      <details><summary>¿y si después necesito algo más?</summary><p>El sistema lo desarrollo yo mismo en Managua, así que me podés pedir mejoras y las conversamos directo, sin call centers.</p></details>
+      <details><summary>¿cómo pago?</summary><p>Por transferencia bancaria o efectivo, con recibo. Podés pagar mes a mes o por año adelantado y ahorrar dos meses.</p></details>
+      
     </div>
   </div>
 </section>
@@ -622,7 +428,7 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
 <!-- ===== CIERRE ===== -->
 <section class="final">
   <div class="w">
-    <span class="code">08 / siguiente paso</span>
+    <span class="code">09 / siguiente paso</span>
     <h2>sabé dónde está tu <em>plata.</em></h2>
     <p>escribime por whatsapp y en 7 minutos te muestro anaquel funcionando. sin compromiso y sin presión.</p>
     <div class="cta">
@@ -632,24 +438,16 @@ footer.foot .code{color:hsl(var(--rail-fg)/.6)}
   </div>
 </section>
 </main>
-
 <footer class="foot">
+  <div class="w foot-top">
+    <div><span class="code">anaquel para tu giro</span><nav class="foot-links" aria-label="Giros"><a href="ferreterias/">ferreterías</a><a href="pulperias/">pulperías y minisúper</a><a href="distribuidoras/">distribuidoras y mayoristas</a><a href="celulares-y-electronica/">tiendas de celulares y electrónica</a><a href="tiendas-de-ropa/">tiendas de ropa</a></nav></div>
+  </div>
   <div class="w">
     <span class="barcode light" aria-hidden="true"></span>
     <span class="code">anaquel · v1 · managua, nicaragua</span>
     <span class="code">hecho por kisnner obando</span>
   </div>
 </footer>
-
-<script>
-(function(){
-  var root=document.documentElement,btn=document.querySelector('[data-theme-toggle]');
-  function apply(dark){root.classList.toggle('dark',dark);btn.setAttribute('aria-pressed',String(dark));btn.textContent=dark?'claro':'oscuro'}
-  var saved=null;try{saved=localStorage.getItem('anaquel-theme')}catch(e){}
-  var dark=saved?saved==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
-  apply(dark);
-  btn.addEventListener('click',function(){dark=!dark;apply(dark);try{localStorage.setItem('anaquel-theme',dark?'dark':'light')}catch(e){}});
-})();
-</script>
+<script src="assets/theme.js"></script>
 </body>
 </html>
