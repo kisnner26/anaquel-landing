@@ -119,8 +119,8 @@ nav.menu a:hover{color:hsl(var(--foreground));background:hsl(var(--muted))}
 .feat h3 em{font-style:normal;color:hsl(var(--primary))}
 .feat p.lead{color:hsl(var(--muted-foreground));margin-bottom:18px;max-width:46ch}
 .feat ul{list-style:none;border-top:1px solid hsl(var(--foreground))}
-.feat li{padding:10px 0 10px 0;border-bottom:1px dashed hsl(var(--border-strong));font-size:14.5px;display:flex;gap:12px}
-.feat li::before{content:"›";font-family:var(--font-mono);color:hsl(var(--primary))}
+.feat li{position:relative;padding:10px 0 10px 22px;border-bottom:1px dashed hsl(var(--border-strong));font-size:14.5px}
+.feat li::before{content:"›";position:absolute;left:4px;top:10px;font-family:var(--font-mono);color:hsl(var(--primary))}
 .vis{padding:14px}
 .vis .cap{margin-top:10px}
 
