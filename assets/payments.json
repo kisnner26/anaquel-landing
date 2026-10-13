@@ -17,10 +17,10 @@
     }
   },
   "bank": {
-    "banco": "",
-    "tipo_cuenta": "",
-    "numero": "",
-    "titular": "",
+    "banco": "LAFISE",
+    "tipo_cuenta": "Digital Dólares",
+    "numero": "132232353",
+    "titular": "KISNNER VARONY OBANDO MANZANAREZ",
     "moneda": "USD"
   },
   "plans": {
